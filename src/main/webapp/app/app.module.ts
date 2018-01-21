@@ -23,6 +23,7 @@ import {
     PageRibbonComponent,
     ErrorComponent
 } from './layouts';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import {
         NavbarComponent,
         ErrorComponent,
         PageRibbonComponent,
-        FooterComponent
+        FooterComponent,
+        TestComponent
     ],
     providers: [
         ProfileService,
