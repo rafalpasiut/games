@@ -4,7 +4,7 @@
         "name": "games"
     },
     "apps": [{
-        "root": "src/main/webapp",
+        "root": "src//main//webapp",
         "outDir": "build/www/app",
         "assets": [
             "content",
