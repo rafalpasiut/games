@@ -1,25 +1,26 @@
 <div class="row">
     <div class="col-md-2">
-        <button type="submit" style="border: 0; background: transparent">
-            <img src="../../content/images/Sudoku.png" width="100" alt="Sudoku submit"/>
+        <button type="submit" class="gameSelectionButton">
+            <img src="../../content/images/Sudoku.png" width="100" alt="Sudoku submit" (click)="selectGame('Sudoku')"/>
         </button>
-        <button type="submit" style="border: 0; background: transparent">
-            <img src="../../content/images/RPSLS.png" width="100" alt="RPS submit" />
+        <button type="submit" class="gameSelectionButton">
+            <img src="../../content/images/RPSLS.png" width="100" alt="RPS submit" (click)="selectGame('RPS')"/>
         </button>
     </div>
-    <div class="col-md-9">
-        <h1 class="display-4">Welcome, Rafal!!!</h1>
-        <p class="lead">This is your homepage</p>
-
-        <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success" *ngSwitchCase="true">
-                <span *ngIf="account"
-                > You are logged in as user "{{account.login}}". </span>
+    <div class="col-md-9" [ngSwitch]="selectedGame">
+        <div *ngSwitchCase="'Sudoku'">
+            <div class="alert alert-success">
+                <jhi-sudoku-game></jhi-sudoku-game>
             </div>
-
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>If you want to </span>
-                <a class="alert-link" (click)="login()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+        </div>
+        <div *ngSwitchCase="'RPS'">
+            <div class="alert alert-success">
+                <jhi-rps-game></jhi-rps-game>
+            </div>
+        </div>
+        <div *ngSwitchCase="'none'">
+            <div class="alert alert-success text-center">
+                <span>Select the game...</span>
             </div>
         </div>
     </div>

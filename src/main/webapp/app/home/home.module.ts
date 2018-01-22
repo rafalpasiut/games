@@ -1,5 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {SudokuGameComponent} from "../layouts/sudoku-game/sudoku-game.component";
+import {RpsGameComponent} from "../layouts/rps-game/rps-game.component";
 
 import { GamesSharedModule } from '../shared';
 
@@ -12,6 +14,8 @@ import { HOME_ROUTE, HomeComponent } from './';
     ],
     declarations: [
         HomeComponent,
+        SudokuGameComponent,
+        RpsGameComponent
     ],
     entryComponents: [
     ],
