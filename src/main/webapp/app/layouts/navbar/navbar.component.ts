@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    userName: string;
 
     constructor(
         private loginService: LoginService,
@@ -50,12 +51,14 @@ export class NavbarComponent implements OnInit {
 
     login() {
         this.modalRef = this.loginModalService.open();
+        this.userName = 'test';
     }
 
     logout() {
         this.collapseNavbar();
         this.loginService.logout();
         this.router.navigate(['']);
+        this.userName = 'Please login';
     }
 
     toggleNavbar() {
