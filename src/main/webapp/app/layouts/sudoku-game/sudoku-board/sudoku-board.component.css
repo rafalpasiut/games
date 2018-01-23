@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.SudokuBorders {
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    float: none;
+    border: 10px solid gray;
+    background-color: transparent;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.outer-square {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 90%;
+    height: 90%;
+    background-color: #ccc;
+    margin: 5%;
+    display: -webkit-flex;
+    -webkit-flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cell {
+    line-height: 99%;
+    font-size: 50px;
+    min-width: 50px;
+    font-weight: bold;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    border: solid grey 1px;
+    background: rgba(248,244,255,0.35);
+    margin: 0px;
+    color: black;
+}
+
+.cell:hover {
+    background: gray;
+}
+
+[contenteditable="true"]:hover > style {
+    display: block;
+    font-size: .75em;
+    color: blue;
+    font-family: courier, sans-serif;
+    background: #fff;
+    line-height: 1.5;
+    position: relative;
+    right: -36em;
+    top: -2em;
+}

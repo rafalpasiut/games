@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public class SudokuCell {
 
-    private static final int EMPTY_CELL_VALUE = -1;
+    public static final int EMPTY_CELL_VALUE = -1;
     private static final String EMPTY_FIELD_SIGN = ".";
 
     private Integer value;
