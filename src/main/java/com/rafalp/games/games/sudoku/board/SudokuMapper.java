@@ -1,7 +1,14 @@
 package com.rafalp.games.games.sudoku.board;
 
+import com.rafalp.games.domain.CellEntity;
+import com.rafalp.games.domain.RowEntity;
+import com.rafalp.games.domain.SudokuEntity;
 import com.rafalp.games.games.sudoku.creator.CellValueDTO;
+import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
+
+@Controller
 public class SudokuMapper {
 
     public SudokuBoard boardFromArray(int[][] board){
@@ -43,5 +50,36 @@ public class SudokuMapper {
             i++;
         }
         return new SudokuBoardWebDTO(webBoard);
+    }
+
+    public SudokuEntity sudokuWebToSudokuEntity(SudokuBoardWebDTO boardWebDTO){
+        SudokuEntity sudoku = new SudokuEntity(boardWebDTO.getUserId(),new ArrayList<>());
+
+        for(CellWebDTO[] row : boardWebDTO.getBoard()){
+            sudoku.addRows(mapCellsRowToRowEntity(row));
+        }
+        return sudoku;
+    }
+
+    private RowEntity mapCellsRowToRowEntity(CellWebDTO[] cellRow){
+
+        RowEntity rowEntity = new RowEntity();
+
+        for(CellWebDTO cell : cellRow){
+            rowEntity.addCell(mapWebCellToCellEntity(cell));
+        }
+        return rowEntity;
+    }
+
+    private CellEntity mapWebCellToCellEntity(CellWebDTO cellWebDTO){
+        CellEntity cellEntity = new CellEntity();
+
+        cellEntity.setValue(cellWebDTO.getValue());
+        cellEntity.setSolution(cellWebDTO.getSolution());
+        cellEntity.setRowNumber(cellWebDTO.getX());
+        cellEntity.setColumnNumber(cellWebDTO.getY());
+        cellEntity.setDraftNumber(cellWebDTO.isDraftNumber());
+
+        return cellEntity;
     }
 }

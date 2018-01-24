@@ -36,4 +36,5 @@ export class SudokuGameComponent implements OnInit {
 
 export interface SudokuGenResponse {
     board: Cell[][];
+    userId: number;
 }

@@ -220,6 +220,7 @@ dependencies {
     optional ("org.springframework.boot:spring-boot-configuration-processor") {
         exclude group: 'com.vaadin.external.google', module: 'android-json'
     }
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 

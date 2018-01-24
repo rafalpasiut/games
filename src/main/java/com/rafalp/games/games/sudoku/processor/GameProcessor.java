@@ -75,7 +75,7 @@ public class GameProcessor {
             sudokuBoard = sudokuSolver.solve(sudokuBoard);
             System.out.println(sudokuBoard);
         } catch (NoSolutionException e) {
-            System.out.println("Can`t solve. Bad sudoku?");
+            System.out.println("Can`t solve. Bad sudokuEntity?");
         } catch (CloneNotSupportedException e) {
             System.out.println("Critical ERROR. Clone not support exception.");
         } catch (Exception e) {
@@ -91,7 +91,7 @@ public class GameProcessor {
             sudokuBoard = sudokuCreator.addNumbersToBoard(line);
             System.out.println(sudokuBoard);
         } catch (Exception e) {
-            System.out.println("Exception when creating debug sudoku");
+            System.out.println("Exception when creating debug sudokuEntity");
         }
     }
 
@@ -99,7 +99,7 @@ public class GameProcessor {
         System.out.println("To insert new number type for example 1,1,3 to insert 3 in column 1, row 1. " +
                 "You can insert as many numbers as you like. Numbers must be in range from 1 to " + SudokuBoard.SUDOKU_SIZE + ".\n" +
                 "help - show this message again\n" +
-                "sudoku - solve sudoku\n" +
+                "sudokuEntity - solve sudokuEntity\n" +
                 "restart - clear everything and start from scratch\n" +
                 "show - print current board\n" +
                 "exit - quit application\n");

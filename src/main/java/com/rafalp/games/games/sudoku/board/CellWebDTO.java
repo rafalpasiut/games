@@ -1,8 +1,9 @@
 package com.rafalp.games.games.sudoku.board;
 
-import javax.persistence.Entity;
+import lombok.NoArgsConstructor;
 
 
+@NoArgsConstructor
 public class CellWebDTO {
 
     private int value;

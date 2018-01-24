@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SudokuGenResponse} from '../sudoku-game.component';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
     selector: 'jhi-sudoku-board',
@@ -14,7 +15,7 @@ export class SudokuBoardComponent implements OnInit {
 
     @Input() public newSudokuResponse: SudokuGenResponse;
 
-    constructor() {
+    constructor(private http: HttpClient) {
     }
 
     ngOnInit() {
@@ -68,8 +69,10 @@ export class SudokuBoardComponent implements OnInit {
         console.log(charCode);
         if (charCode > 48 && charCode < 58) {
             this.setCellValue(Number(String.fromCharCode(charCode)), i, j);
+            this.saveChangedSudoku();
         } else if (charCode > 96 && charCode < 106) {
             this.setCellValue(Number(String.fromCharCode(charCode - 48)), i, j);
+            this.saveChangedSudoku();
         } else if (charCode === 8 || charCode === 46 || charCode === 32) {
             console.log('backspace');
             this.setCellValue(0, i, j);
@@ -77,6 +80,15 @@ export class SudokuBoardComponent implements OnInit {
             return true;
         }
         return false;
+    }
+
+    saveChangedSudoku(){
+
+        const sudokuToSave: SudokuGenResponse = { board: this.board, userId: 5 };
+        console.log("SAVING");
+        return this.http.put('http://localhost:8080/sudoku/saveSudoku', sudokuToSave).subscribe(res => {
+            console.log(res);
+        });;
     }
 
     setCellValue(value, i, j): void {
