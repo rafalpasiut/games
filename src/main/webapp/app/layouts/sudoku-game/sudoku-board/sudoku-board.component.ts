@@ -27,27 +27,23 @@ export class SudokuBoardComponent implements OnInit {
 
 
     createNewSudoku(sudoku: SudokuGenResponse): void {
-        console.log(sudoku);
-        this.setDraftAndBoard(sudoku.board, sudoku.solution);
+        this.setDraftAndBoard(sudoku.board);
     }
 
-    setDraftAndBoard(board: number[][], solution: number[][]) {
+    setDraftAndBoard(board: Cell[][]) {
         this.board = [];
-        let isSet: boolean;
         for (let i = 0; i < 9; i++) {
             this.board[i] = [];
             for (let j = 0; j < 9; j++) {
-                isSet = board[i][j] === 0 ? false : true;
-                this.board[i][j] = new Cell(board[i][j], isSet, solution[i][j], i, j);
+                this.board[i][j] = new Cell(board[i][j].value, board[i][j].solution, board[i][j].x, board[i][j].y, board[i][j].draftNumber);
             }
         }
-
+        console.log(this.board);
         this.draftBoard = [];
         for (let i = 0; i < 9; i++) {
             this.draftBoard[i] = [];
             for (let j = 0; j < 9; j++) {
-                isSet = board[i][j] === 0 ? false : true;
-                this.draftBoard[i][j] = new Cell(board[i][j], isSet, solution[i][j], i, j);
+                this.draftBoard[i][j] = new Cell(board[i][j].value, board[i][j].solution, board[i][j].x, board[i][j].y, board[i][j].draftNumber);
             }
         }
     }
@@ -57,7 +53,7 @@ export class SudokuBoardComponent implements OnInit {
         for (let i = 0; i < 9; i++) {
             this.board[i] = [];
             for (let j = 0; j < 9; j++) {
-                this.board[i][j] = new Cell(0, true, 0, i, j);
+                this.board[i][j] = new Cell(0, 0, i, j, true);
             }
         }
     }
@@ -92,17 +88,18 @@ export class SudokuBoardComponent implements OnInit {
 export class Cell {
     value: number;
     solution: number;
-    isDraftNumber: boolean;
     x: number;
     y: number;
+    draftNumber: boolean;
 
-    constructor(value, isDraftNumber, solution, x, y) {
+    constructor(value, solution, x, y, isDraftNumber) {
         this.value = value;
-        this.isDraftNumber = isDraftNumber;
         this.solution = solution;
         this.x = x;
         this.y = y;
+        this.draftNumber = isDraftNumber;
     }
+
 
     public setValue(value): void {
         this.value = value;
@@ -113,11 +110,11 @@ export class Cell {
     }
 
     public isEditable(): boolean {
-        return !this.isDraftNumber;
+        return !this.draftNumber;
     }
 
     getColorStyle(): String {
-        if (this.isDraftNumber) {
+        if (this.draftNumber) {
             return "draft-cell";
         } else if (this.value === this.solution) {
             return "ok-cell";
@@ -127,14 +124,13 @@ export class Cell {
     }
 
     getBorderStyle(): string {
-        let style:string ='';
-        if ((this.y+1) % 3 === 0) {
-            style+=" right-border-cell ";
+        let style: string = '';
+        if ((this.y + 1) % 3 === 0) {
+            style += " right-border-cell ";
         }
-        if((this.x+1) % 3 === 0){
-            style+=" bottom-border-cell ";
+        if ((this.x + 1) % 3 === 0) {
+            style += " bottom-border-cell ";
         }
-        console.log(style);
         return style;
     }
 }

@@ -85,3 +85,10 @@ Logo styles
     background-size: contain;
     width: 100%;
 }
+
+.user-info{
+    width: 20%;
+    text-align: left;
+    font-size: 1.5em;
+    color: white;
+}

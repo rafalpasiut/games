@@ -6,6 +6,7 @@ import { ProfileService } from '../profiles/profile.service';
 import { Principal, LoginModalService, LoginService } from '../../shared';
 
 import { VERSION } from '../../app.constants';
+import {JhiEventManager} from "ng-jhipster";
 
 @Component({
     selector: 'jhi-navbar',
@@ -21,14 +22,15 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
-    userName: string;
+    loggedUser: string;
 
     constructor(
         private loginService: LoginService,
         private principal: Principal,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
-        private router: Router
+        private router: Router,
+        private eventManager: JhiEventManager
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -39,6 +41,7 @@ export class NavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+        this.registerAuthenticationSuccess();
     }
 
     collapseNavbar() {
@@ -51,14 +54,12 @@ export class NavbarComponent implements OnInit {
 
     login() {
         this.modalRef = this.loginModalService.open();
-        this.userName = 'test';
     }
 
     logout() {
         this.collapseNavbar();
         this.loginService.logout();
         this.router.navigate(['']);
-        this.userName = 'Please login';
     }
 
     toggleNavbar() {
@@ -67,5 +68,14 @@ export class NavbarComponent implements OnInit {
 
     getImageUrl() {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
+    }
+
+    registerAuthenticationSuccess() {
+        this.eventManager.subscribe('authenticationSuccess', (message) => {
+            this.principal.identity().then((account) => {
+                this.loggedUser = account.login;
+                console.log(account);
+            });
+        });
     }
 }

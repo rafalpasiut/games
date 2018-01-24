@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Cell} from "./sudoku-board/sudoku-board.component";
 
 @Component({
     selector: 'jhi-sudoku-game',
@@ -34,6 +35,5 @@ export class SudokuGameComponent implements OnInit {
 }
 
 export interface SudokuGenResponse {
-    board: number[][];
-    solution: number[][];
+    board: Cell[][];
 }

@@ -1,20 +1,18 @@
 package com.rafalp.games.games.sudoku.board;
 
+import javax.persistence.Entity;
+
+
 public class SudokuBoardWebDTO {
 
-    private int[][] board;
-    private int[][] solution;
+    private CellWebDTO[][] board;
 
-    public SudokuBoardWebDTO(int[][] board, int[][] solution) {
+    public SudokuBoardWebDTO(CellWebDTO[][] board) {
         this.board = board;
-        this.solution = solution;
     }
 
-    public int[][] getBoard() {
+    public CellWebDTO[][] getBoard() {
         return board;
     }
 
-    public int[][] getSolution() {
-        return solution;
-    }
 }

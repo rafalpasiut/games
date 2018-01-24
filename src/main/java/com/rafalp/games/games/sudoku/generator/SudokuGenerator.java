@@ -172,7 +172,7 @@ public class SudokuGenerator {
     }
 
     public SudokuBoardWebDTO getSudokuDTO(){
-        return new SudokuBoardWebDTO(board, sudokuMapper.sudokuArrayFromBoard(solution));
+        return sudokuMapper.mapBoardToWebDTO(board, solution);
     }
 
     public static void main(String[] args) {

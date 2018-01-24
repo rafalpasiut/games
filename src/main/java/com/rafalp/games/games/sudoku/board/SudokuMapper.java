@@ -28,4 +28,20 @@ public class SudokuMapper {
         });
         return board;
     }
+
+    public SudokuBoardWebDTO mapBoardToWebDTO(int[][] board, SudokuBoard solution){
+        int[][] solutionArray = sudokuArrayFromBoard(solution);
+        CellWebDTO[][] webBoard = new CellWebDTO[9][9];
+        int i=0,j;
+        for(int[] row : board){
+            j=0;
+            for(int cell : row){
+                boolean isDraft = (board[i][j] != 0);
+                webBoard[i][j] = new CellWebDTO(cell,solutionArray[i][j],isDraft,i,j);
+                j++;
+            }
+            i++;
+        }
+        return new SudokuBoardWebDTO(webBoard);
+    }
 }
