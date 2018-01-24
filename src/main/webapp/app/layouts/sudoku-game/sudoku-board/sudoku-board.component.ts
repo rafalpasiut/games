@@ -11,7 +11,6 @@ export class SudokuBoardComponent implements OnInit {
 
     board: Cell[][];
     draftBoard: Cell[][];
-    solution: Cell[][];
 
     @Input() public newSudokuResponse: SudokuGenResponse;
 
@@ -29,26 +28,17 @@ export class SudokuBoardComponent implements OnInit {
 
     createNewSudoku(sudoku: SudokuGenResponse): void {
         console.log(sudoku);
-        //this.setSolution(sudoku.solution);
-        this.setDraftAndBoard(sudoku.board);
+        this.setDraftAndBoard(sudoku.board, sudoku.solution);
     }
 
-    setSolution(solution: number[][]) {
-        this.solution = [];
-        for (let i = 0; i < 9; i++) {
-            this.solution[i] = [];
-            for (let j = 0; j < 9; j++) {
-                this.solution[i][j] = new Cell(solution[i][j], true);
-            }
-        }
-    }
-
-    setDraftAndBoard(board: number[][]) {
+    setDraftAndBoard(board: number[][], solution: number[][]) {
         this.board = [];
+        let isSet: boolean;
         for (let i = 0; i < 9; i++) {
             this.board[i] = [];
             for (let j = 0; j < 9; j++) {
-                this.board[i][j] = new Cell(board[i][j], true);
+                isSet = board[i][j] === 0 ? false : true;
+                this.board[i][j] = new Cell(board[i][j], isSet, solution[i][j], i, j);
             }
         }
 
@@ -56,17 +46,18 @@ export class SudokuBoardComponent implements OnInit {
         for (let i = 0; i < 9; i++) {
             this.draftBoard[i] = [];
             for (let j = 0; j < 9; j++) {
-                this.draftBoard[i][j] = new Cell(board[i][j], true);
+                isSet = board[i][j] === 0 ? false : true;
+                this.draftBoard[i][j] = new Cell(board[i][j], isSet, solution[i][j], i, j);
             }
         }
     }
 
-    fillSampleSudoku(): void {
+    fillSudokuWithDummyData(): void {
         this.board = [];
         for (let i = 0; i < 9; i++) {
             this.board[i] = [];
             for (let j = 0; j < 9; j++) {
-                this.board[i][j] = new Cell(0, true);
+                this.board[i][j] = new Cell(0, true, 0, i, j);
             }
         }
     }
@@ -100,11 +91,17 @@ export class SudokuBoardComponent implements OnInit {
 
 export class Cell {
     value: number;
+    solution: number;
     isDraftNumber: boolean;
+    x: number;
+    y: number;
 
-    constructor(value, isDraftNumber) {
+    constructor(value, isDraftNumber, solution, x, y) {
         this.value = value;
         this.isDraftNumber = isDraftNumber;
+        this.solution = solution;
+        this.x = x;
+        this.y = y;
     }
 
     public setValue(value): void {
@@ -113,5 +110,31 @@ export class Cell {
 
     public getValueAsString(): string {
         return this.value === 0 ? '' : this.value.toString();
+    }
+
+    public isEditable(): boolean {
+        return !this.isDraftNumber;
+    }
+
+    getColorStyle(): String {
+        if (this.isDraftNumber) {
+            return "draft-cell";
+        } else if (this.value === this.solution) {
+            return "ok-cell";
+        } else {
+            return "wrong-cell";
+        }
+    }
+
+    getBorderStyle(): string {
+        let style:string ='';
+        if ((this.y+1) % 3 === 0) {
+            style+=" right-border-cell ";
+        }
+        if((this.x+1) % 3 === 0){
+            style+=" bottom-border-cell ";
+        }
+        console.log(style);
+        return style;
     }
 }

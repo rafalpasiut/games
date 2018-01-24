@@ -1,11 +1,9 @@
 package com.rafalp.games.games.sudoku.generator;
 
-import com.rafalp.games.games.shared.Copier;
 import com.rafalp.games.games.sudoku.board.SudokuBoard;
 import com.rafalp.games.games.sudoku.board.SudokuBoardWebDTO;
 import com.rafalp.games.games.sudoku.board.SudokuCell;
 import com.rafalp.games.games.sudoku.board.SudokuMapper;
-import com.rafalp.games.games.sudoku.creator.Creator;
 import com.rafalp.games.games.sudoku.exceptions.NoSolutionException;
 import com.rafalp.games.games.sudoku.exceptions.NoUniqueSolution;
 import com.rafalp.games.games.sudoku.solver.SudokuSolver;
@@ -19,7 +17,7 @@ import java.util.stream.IntStream;
 @Component
 public class SudokuGenerator {
 
-    public static final int MAX_GEN_TRIES = 1000;
+    public static final int MAX_GEN_TRIES = 100;
     private int[][] board;
     private SudokuBoard sudokuBoard;
     private SudokuSolver sudokuSolver = new EnchancedBacktrackingAlgorithm();
