@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {SudokuGenResponse} from '../sudoku-game.component';
 
 @Component({
     selector: 'jhi-sudoku-board',
@@ -7,15 +8,57 @@ import {Component, OnInit} from '@angular/core';
 })
 export class SudokuBoardComponent implements OnInit {
 
+
     board: Cell[][];
     draftBoard: Cell[][];
     solution: Cell[][];
+
+    @Input() public newSudokuResponse: SudokuGenResponse;
 
     constructor() {
     }
 
     ngOnInit() {
-        this.fillSampleSudoku();
+
+    }
+
+    ngOnChanges(change) {
+        this.createNewSudoku(this.newSudokuResponse);
+    }
+
+
+    createNewSudoku(sudoku: SudokuGenResponse): void {
+        console.log(sudoku);
+        //this.setSolution(sudoku.solution);
+        this.setDraftAndBoard(sudoku.board);
+    }
+
+    setSolution(solution: number[][]) {
+        this.solution = [];
+        for (let i = 0; i < 9; i++) {
+            this.solution[i] = [];
+            for (let j = 0; j < 9; j++) {
+                this.solution[i][j] = new Cell(solution[i][j], true);
+            }
+        }
+    }
+
+    setDraftAndBoard(board: number[][]) {
+        this.board = [];
+        for (let i = 0; i < 9; i++) {
+            this.board[i] = [];
+            for (let j = 0; j < 9; j++) {
+                this.board[i][j] = new Cell(board[i][j], true);
+            }
+        }
+
+        this.draftBoard = [];
+        for (let i = 0; i < 9; i++) {
+            this.draftBoard[i] = [];
+            for (let j = 0; j < 9; j++) {
+                this.draftBoard[i][j] = new Cell(board[i][j], true);
+            }
+        }
     }
 
     fillSampleSudoku(): void {
@@ -23,12 +66,12 @@ export class SudokuBoardComponent implements OnInit {
         for (let i = 0; i < 9; i++) {
             this.board[i] = [];
             for (let j = 0; j < 9; j++) {
-                this.board[i][j] = new Cell(-1, true);
+                this.board[i][j] = new Cell(0, true);
             }
         }
     }
 
-    init(): void{
+    init(): void {
 
     }
 
@@ -44,7 +87,7 @@ export class SudokuBoardComponent implements OnInit {
             console.log('backspace');
             this.setCellValue(0, i, j);
         } else if (charCode === 9 || charCode === 38 || charCode === 39) {
-            return true; //TAB
+            return true;
         }
         return false;
     }

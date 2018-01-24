@@ -1,5 +1,6 @@
 package com.rafalp.games.web.rest;
 
+import com.rafalp.games.games.sudoku.board.SudokuBoardWebDTO;
 import com.rafalp.games.games.sudoku.generator.SudokuGenerator;
 import com.rafalp.games.service.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +18,14 @@ public class SudokuController {
     private SudokuGenerator sudokuGenerator;
 
     @RequestMapping(method = RequestMethod.GET, value = "/init")
-    public String inicializeSudokuGame(UserDTO user) {
-        sudokuGenerator.nextBoard(45);
-        return "hh";//sudokuGenerator.getRawData();
+    public SudokuBoardWebDTO initializeSudokuGame() {
+        sudokuGenerator.nextBoard(50);
+        return sudokuGenerator.getSudokuDTO();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/new")
-    public String generateNewGame(UserDTO user) {
-        sudokuGenerator.nextBoard(45);
-        return "kk";//sudokuGenerator.getRawData();
+    public SudokuBoardWebDTO generateNewGame() {
+        sudokuGenerator.nextBoard(50);
+        return sudokuGenerator.getSudokuDTO();
     }
 }

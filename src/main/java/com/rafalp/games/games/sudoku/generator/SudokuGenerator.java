@@ -1,7 +1,10 @@
 package com.rafalp.games.games.sudoku.generator;
 
+import com.rafalp.games.games.shared.Copier;
 import com.rafalp.games.games.sudoku.board.SudokuBoard;
+import com.rafalp.games.games.sudoku.board.SudokuBoardWebDTO;
 import com.rafalp.games.games.sudoku.board.SudokuCell;
+import com.rafalp.games.games.sudoku.board.SudokuMapper;
 import com.rafalp.games.games.sudoku.creator.Creator;
 import com.rafalp.games.games.sudoku.exceptions.NoSolutionException;
 import com.rafalp.games.games.sudoku.exceptions.NoUniqueSolution;
@@ -16,11 +19,11 @@ import java.util.stream.IntStream;
 @Component
 public class SudokuGenerator {
 
-    public static final int MAX_GEN_TRIES = 50;
+    public static final int MAX_GEN_TRIES = 1000;
     private int[][] board;
     private SudokuBoard sudokuBoard;
     private SudokuSolver sudokuSolver = new EnchancedBacktrackingAlgorithm();
-    private Creator sudokuCreator = new Creator();
+    private SudokuMapper sudokuMapper = new SudokuMapper();
     private SudokuBoard solution;
 
     public int[][] nextBoard(int difficulty) {
@@ -114,10 +117,10 @@ public class SudokuGenerator {
             cellCoords = pickRandomCoordinate();
 
             int cellValue = board[cellCoords.x][cellCoords.y];
-            sudokuCreator.createNewBoard();
             board[cellCoords.x][cellCoords.y] = SudokuCell.EMPTY_CELL_VALUE;
-            sudokuBoard = sudokuCreator.boardFromArray(board);
+            sudokuBoard = sudokuMapper.boardFromArray(board);
             try {
+                sudokuSolver = new EnchancedBacktrackingAlgorithm();
                 solution = sudokuSolver.solve(sudokuBoard);
                 remainingHoles--;
             } catch (NoSolutionException e) {
@@ -134,7 +137,9 @@ public class SudokuGenerator {
         }
 
         System.out.println(sudokuBoard);
+        System.out.println(solution);
         System.out.println(remainingHoles);
+        System.out.println(tryCount);
     }
 
     private Point pickRandomCoordinate() {
@@ -166,6 +171,10 @@ public class SudokuGenerator {
                 }
         }
         System.out.println();
+    }
+
+    public SudokuBoardWebDTO getSudokuDTO(){
+        return new SudokuBoardWebDTO(board, sudokuMapper.sudokuArrayFromBoard(solution));
     }
 
     public static void main(String[] args) {

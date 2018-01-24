@@ -30,7 +30,6 @@ public class EnchancedBacktrackingAlgorithm implements SudokuSolver {
                     sudoku = sudokuToSolve;
                 }
                 boolean sudokuChanged = true;
-                int i = 0;
                 while (!sudoku.areAllCellsFilled()) {
                     if (sudokuChanged) {
                         try {
@@ -47,9 +46,8 @@ public class EnchancedBacktrackingAlgorithm implements SudokuSolver {
                         backtracker.guessNumber(sudoku);
                         sudokuChanged = true;
                     }
-                    i++;
                 }
-                soluion = Copier.deepCopie(sudoku);
+                soluion = sudoku.deepCopy();
                 solutionCount++;
                 if (solutionCount > 1) {
                     throw new NoUniqueSolution();
