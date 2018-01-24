@@ -27,6 +27,19 @@ public class Creator {
         return sudokuBoard;
     }
 
+    public SudokuBoard boardFromArray(int[][] board){
+        int i=1;
+        for(int[] row : board){
+            int j=1;
+            for(int cellValue : row){
+                sudokuBoard.setCell(new CellValueDTO(i,j,cellValue));
+                j++;
+            }
+            i++;
+        }
+        return sudokuBoard;
+    }
+
     private void setCellsInSudoku(Set<CellValueDTO> cells) throws NotUniqueCellValue {
         checker = new Checker(sudokuBoard);
         for (CellValueDTO cell : cells) {

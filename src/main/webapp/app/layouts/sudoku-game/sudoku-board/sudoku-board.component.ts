@@ -28,6 +28,10 @@ export class SudokuBoardComponent implements OnInit {
         }
     }
 
+    init(): void{
+
+    }
+
     valueEntered(event, i, j) {
         console.log('key pressed');
         const charCode = (event.which) ? event.which : event.keyCode;
@@ -38,7 +42,7 @@ export class SudokuBoardComponent implements OnInit {
             this.setCellValue(Number(String.fromCharCode(charCode - 48)), i, j);
         } else if (charCode === 8 || charCode === 46 || charCode === 32) {
             console.log('backspace');
-            this.setCellValue(-1, i, j);
+            this.setCellValue(0, i, j);
         } else if (charCode === 9 || charCode === 38 || charCode === 39) {
             return true; //TAB
         }
@@ -65,6 +69,6 @@ export class Cell {
     }
 
     public getValueAsString(): string {
-        return this.value === -1 ? '' : this.value.toString();
+        return this.value === 0 ? '' : this.value.toString();
     }
 }

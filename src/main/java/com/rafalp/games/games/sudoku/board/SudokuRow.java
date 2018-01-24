@@ -2,12 +2,13 @@ package com.rafalp.games.games.sudoku.board;
 
 import com.rafalp.games.games.sudoku.creator.CellValueDTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class SudokuRow {
+public class SudokuRow implements Serializable {
 
     private List<SudokuCell> cells;
 

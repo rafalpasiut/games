@@ -1,15 +1,19 @@
 package com.rafalp.games.games.sudoku.solver.algorithm.backtracking;
 
+import com.rafalp.games.games.shared.Copier;
 import com.rafalp.games.games.sudoku.board.SudokuBoard;
 import com.rafalp.games.games.sudoku.board.SudokuCell;
 import com.rafalp.games.games.sudoku.exceptions.BadNumberException;
 import com.rafalp.games.games.sudoku.exceptions.NoSolutionException;
+import com.rafalp.games.games.sudoku.exceptions.NoUniqueSolution;
 import com.rafalp.games.games.sudoku.solver.SudokuSolver;
 
 public class EnchancedBacktrackingAlgorithm implements SudokuSolver {
 
     private Backtracker backtracker;
     private SudokuBoard sudoku;
+    private SudokuBoard soluion;
+    private Boolean uniqueSolution;
     private CellsIterator cellsIterator;
 
     public EnchancedBacktrackingAlgorithm() {
@@ -17,23 +21,50 @@ public class EnchancedBacktrackingAlgorithm implements SudokuSolver {
     }
 
     @Override
-    public SudokuBoard solve(SudokuBoard sudokuToSolve) throws NoSolutionException, CloneNotSupportedException {
-        if (sudokuToSolve != null) {
-            sudoku = sudokuToSolve;
-            boolean sudokuChanged = true;
-            int i = 0;
-            while (!sudoku.areAllCellsFilled()) {
-                if (sudokuChanged) {
-                    sudokuChanged = runCheckAlgorithms();
-                } else {
-                    backtracker.guessNumber(sudoku);
-                    sudokuChanged = true;
+    public SudokuBoard solve(SudokuBoard sudokuToSolve) throws CloneNotSupportedException, NoSolutionException, NoUniqueSolution {
+        int solutionCount = 0;
+
+        while (true) {
+            if (sudokuToSolve != null) {
+                if (solutionCount == 0) {
+                    sudoku = sudokuToSolve;
                 }
-                i++;
+                boolean sudokuChanged = true;
+                int i = 0;
+                while (!sudoku.areAllCellsFilled()) {
+                    if (sudokuChanged) {
+                        try {
+                            sudokuChanged = runCheckAlgorithms();
+                        } catch (NoSolutionException e) {
+                            if (solutionCount == 0) {
+                                throw e;
+                            } else {
+                                return soluion;
+                            }
+                        }
+
+                    } else {
+                        backtracker.guessNumber(sudoku);
+                        sudokuChanged = true;
+                    }
+                    i++;
+                }
+                soluion = Copier.deepCopie(sudoku);
+                solutionCount++;
+                if (solutionCount > 1) {
+                    throw new NoUniqueSolution();
+                }
+                try {
+                    sudoku = backtracker.checkBactrackAndRestore();
+                } catch (NoSolutionException e) {
+                    if (solutionCount == 0) {
+                        throw e;
+                    } else {
+                        return soluion;
+                    }
+                }
             }
-            System.out.println("Iterations to solve this sudoku: " + i);
         }
-        return sudoku;
     }
 
     private boolean runCheckAlgorithms() throws NoSolutionException {

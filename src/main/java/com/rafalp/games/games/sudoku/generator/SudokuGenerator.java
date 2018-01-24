@@ -2,13 +2,26 @@ package com.rafalp.games.games.sudoku.generator;
 
 import com.rafalp.games.games.sudoku.board.SudokuBoard;
 import com.rafalp.games.games.sudoku.board.SudokuCell;
+import com.rafalp.games.games.sudoku.creator.Creator;
+import com.rafalp.games.games.sudoku.exceptions.NoSolutionException;
+import com.rafalp.games.games.sudoku.exceptions.NoUniqueSolution;
+import com.rafalp.games.games.sudoku.solver.SudokuSolver;
+import com.rafalp.games.games.sudoku.solver.algorithm.backtracking.EnchancedBacktrackingAlgorithm;
+import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+@Component
 public class SudokuGenerator {
 
+    public static final int MAX_GEN_TRIES = 50;
     private int[][] board;
+    private SudokuBoard sudokuBoard;
+    private SudokuSolver sudokuSolver = new EnchancedBacktrackingAlgorithm();
+    private Creator sudokuCreator = new Creator();
+    private SudokuBoard solution;
 
     public int[][] nextBoard(int difficulty) {
         board = new int[SudokuBoard.SUDOKU_SIZE][SudokuBoard.SUDOKU_SIZE];
@@ -37,17 +50,18 @@ public class SudokuGenerator {
             if (legalMove(x, y, aToCheck)) {
                 board[x][y] = aToCheck;
                 if (x == 8) {
-                    if (y == 8)
+                    if (y == 8) {
                         return true;
-                    else {
+                    } else {
                         nextX = 0;
                         nextY = y + 1;
                     }
                 } else {
                     nextX = x + 1;
                 }
-                if (nextCell(nextX, nextY))
+                if (nextCell(nextX, nextY)) {
                     return true;
+                }
             }
         }
         board[x][y] = 0;
@@ -56,25 +70,31 @@ public class SudokuGenerator {
 
     private boolean legalMove(int x, int y, int current) {
         for (int i = 0; i < SudokuBoard.SUDOKU_SIZE; i++) {
-            if (current == board[x][i])
+            if (current == board[x][i]) {
                 return false;
+            }
         }
         for (int i = 0; i < SudokuBoard.SUDOKU_SIZE; i++) {
-            if (current == board[i][y])
+            if (current == board[i][y]) {
                 return false;
+            }
         }
         int cornerX = 0;
         int cornerY = 0;
-        if (x > 2)
-            if (x > 5)
+        if (x > 2) {
+            if (x > 5) {
                 cornerX = 6;
-            else
+            } else {
                 cornerX = 3;
-        if (y > 2)
-            if (y > 5)
+            }
+        }
+        if (y > 2) {
+            if (y > 5) {
                 cornerY = 6;
-            else
+            } else {
                 cornerY = 3;
+            }
+        }
         for (int i = cornerX; i < 10 && i < cornerX + 3; i++)
             for (int j = cornerY; j < 10 && j < cornerY + 3; j++)
                 if (current == board[i][j])
@@ -84,24 +104,49 @@ public class SudokuGenerator {
 
 
     public void makeHoles(int holesToMake) {
-        /* We define difficulty as follows:
-            Easy: 32+ clues (49 or fewer holes)
-			Medium: 27-31 clues (50-54 holes)
-			Hard: 26 or fewer clues (54+ holes)
-			This is human difficulty, not algorighmically (though there is some correlation)
-		*/
-        double remainingSquares = Math.pow(SudokuBoard.SUDOKU_SIZE, 2);
-        double remainingHoles = (double) holesToMake;
 
-        for (int i = 0; i < SudokuBoard.SUDOKU_SIZE; i++)
-            for (int j = 0; j < SudokuBoard.SUDOKU_SIZE; j++) {
-                double holeChance = remainingHoles / remainingSquares;
-                if (Math.random() <= holeChance) {
-                    board[i][j] = SudokuCell.EMPTY_CELL_VALUE;
-                    remainingHoles--;
-                }
-                remainingSquares--;
+        Point cellCoords;
+        int tryCount = 0;
+        int remainingHoles = holesToMake;
+        boolean finish = false;
+
+        while (!finish) {
+            cellCoords = pickRandomCoordinate();
+
+            int cellValue = board[cellCoords.x][cellCoords.y];
+            sudokuCreator.createNewBoard();
+            board[cellCoords.x][cellCoords.y] = SudokuCell.EMPTY_CELL_VALUE;
+            sudokuBoard = sudokuCreator.boardFromArray(board);
+            try {
+                solution = sudokuSolver.solve(sudokuBoard);
+                remainingHoles--;
+            } catch (NoSolutionException e) {
+                e.printStackTrace();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            } catch (NoUniqueSolution noUniqueSolution) {
+                board[cellCoords.x][cellCoords.y] = cellValue;
+                tryCount++;
             }
+            if (remainingHoles < 1 || tryCount>=MAX_GEN_TRIES) {
+                finish = true;
+            }
+        }
+
+        System.out.println(sudokuBoard);
+        System.out.println(remainingHoles);
+    }
+
+    private Point pickRandomCoordinate() {
+        Random random = new Random();
+        Point point = new Point();
+        while (true) {
+            point.x = random.nextInt(SudokuBoard.SUDOKU_SIZE);
+            point.y = random.nextInt(SudokuBoard.SUDOKU_SIZE);
+            if (board[point.x][point.y] != SudokuCell.EMPTY_CELL_VALUE) {
+                return point;
+            }
+        }
     }
 
     public void print() {

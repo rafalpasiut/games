@@ -1,13 +1,14 @@
 package com.rafalp.games.games.sudoku.board;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class SudokuCell {
+public class SudokuCell implements Serializable {
 
-    public static final int EMPTY_CELL_VALUE = -1;
+    public static final int EMPTY_CELL_VALUE = 0;
     private static final String EMPTY_FIELD_SIGN = ".";
 
     private Integer value;

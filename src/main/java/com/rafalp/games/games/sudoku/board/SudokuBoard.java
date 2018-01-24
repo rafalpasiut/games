@@ -2,13 +2,14 @@ package com.rafalp.games.games.sudoku.board;
 
 import com.rafalp.games.games.sudoku.creator.CellValueDTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class SudokuBoard extends Prototype {
+public class SudokuBoard extends Prototype implements Serializable{
 
     public static final int SUDOKU_SIZE = 9;
     public static final int SECTION_ROWS = 3;
