@@ -50,6 +50,7 @@ export class Principal {
     }
 
     identity(force?: boolean): Promise<any> {
+        console.log(this.userIdentity);
         if (force === true) {
             this.userIdentity = undefined;
         }

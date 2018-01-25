@@ -74,7 +74,6 @@ export class NavbarComponent implements OnInit {
         this.eventManager.subscribe('authenticationSuccess', (message) => {
             this.principal.identity().then((account) => {
                 this.loggedUser = account.login;
-                console.log(account);
             });
         });
     }

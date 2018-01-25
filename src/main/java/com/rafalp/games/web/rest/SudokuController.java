@@ -6,6 +6,7 @@ import com.rafalp.games.games.sudoku.board.SudokuMapper;
 import com.rafalp.games.games.sudoku.generator.SudokuGenerator;
 import com.rafalp.games.repository.SudokuRepositoryController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,9 +24,9 @@ public class SudokuController {
     @Autowired
     private SudokuMapper sudokuMapper;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/init")
-    public SudokuBoardWebDTO initializeSudokuGame() {
-        List<SudokuCellEntity> cells = repositoryController.readSudokuCellEntities((long)2);
+    @RequestMapping(method = RequestMethod.GET, value = "/getSaved")
+    public SudokuBoardWebDTO initializeSudokuGame(@RequestParam Long userId) {
+        List<SudokuCellEntity> cells = repositoryController.readSudokuCellEntities(userId);
         if(cells.isEmpty()){
             sudokuGenerator.nextBoard(50);
             return sudokuGenerator.getSudokuDTO();

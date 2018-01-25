@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SudokuGenResponse} from '../sudoku-game.component';
-import {HttpClient} from "@angular/common/http";
+import {SudokuGameRequestsService} from "../sudoku-game-requests.service";
 
 @Component({
     selector: 'jhi-sudoku-board',
@@ -15,7 +15,7 @@ export class SudokuBoardComponent implements OnInit {
 
     @Input() public newSudokuResponse: SudokuGenResponse;
 
-    constructor(private http: HttpClient) {
+    constructor(private sudokuRequest: SudokuGameRequestsService) {
     }
 
     ngOnInit() {
@@ -84,12 +84,8 @@ export class SudokuBoardComponent implements OnInit {
     }
 
     saveChangedSudoku(){
-
         const sudokuToSave: SudokuGenResponse = { board: this.board, userId: 5 };
-        console.log("SAVING");
-        return this.http.put('http://localhost:8080/sudoku/saveSudoku', sudokuToSave).subscribe(res => {
-            console.log(res);
-        });
+        this.sudokuRequest.saveChangedSudoku(sudokuToSave);
     }
 
     setCellValue(value, i, j): void {
@@ -128,21 +124,21 @@ export class Cell {
 
     getColorStyle(): String {
         if (this.draftNumber) {
-            return "draft-cell";
+            return 'draft-cell';
         } else if (this.value === this.solution) {
-            return "ok-cell";
+            return 'ok-cell';
         } else {
-            return "wrong-cell";
+            return 'wrong-cell';
         }
     }
 
     getBorderStyle(): string {
         let style: string = '';
         if ((this.y + 1) % 3 === 0) {
-            style += " right-border-cell ";
+            style += ' right-border-cell ';
         }
         if ((this.x + 1) % 3 === 0) {
-            style += " bottom-border-cell ";
+            style += ' bottom-border-cell ';
         }
         return style;
     }

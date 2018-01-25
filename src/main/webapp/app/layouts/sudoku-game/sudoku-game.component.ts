@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {Cell} from "./sudoku-board/sudoku-board.component";
+import {SudokuGameRequestsService} from "./sudoku-game-requests.service";
+import {JhiEventManager} from "ng-jhipster";
 
 @Component({
     selector: 'jhi-sudoku-game',
@@ -9,27 +10,38 @@ import {Cell} from "./sudoku-board/sudoku-board.component";
 })
 export class SudokuGameComponent implements OnInit {
 
-    newBoard: SudokuGenResponse;
+    newBoard?: SudokuGenResponse;
+    loggedUserId: number;
 
-    constructor(private http: HttpClient) {
+    constructor(private sudokuRequest: SudokuGameRequestsService,
+                private eventManager: JhiEventManager) {
+
     }
 
     ngOnInit() {
+        this.registerAuthenticationSuccess();
         this.init();
     }
 
     generateNew(): void {
-        this.http.get<SudokuGenResponse>('http://localhost:8080/sudoku/new').subscribe((data) => {
-            this.newBoard = data;
-            console.log("FIRST");
-            console.log(data);
-            console.log("FIRST");
-        });
+        this.sudokuRequest.generateNew().subscribe(
+            data => this.newBoard = data
+        );
     }
 
     init(): void {
-        this.http.get<SudokuGenResponse>('http://localhost:8080/sudoku/init').subscribe((data) => {
-            this.newBoard = data;
+        this.sudokuRequest.getSavedSudoku().then(observable => observable.subscribe(
+            data => {
+                this.newBoard = data;
+                console.log(data);
+            }
+        ));
+    }
+
+    registerAuthenticationSuccess() {
+        this.eventManager.subscribe('authenticationSuccess', (message) => {
+            console.log('kdjskdjsk');
+            this.init();
         });
     }
 }
