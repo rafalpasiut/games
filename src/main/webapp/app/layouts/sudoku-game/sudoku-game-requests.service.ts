@@ -16,8 +16,8 @@ export class SudokuGameRequestsService {
 
     }
 
-    generateNew(): Observable<SudokuGenResponse> {
-        return this.http.get<SudokuGenResponse>('http://localhost:8080/sudoku/new').map((data) => {
+    generateNew(hardLevel: number): Observable<SudokuGenResponse> {
+        return this.http.get<SudokuGenResponse>('http://localhost:8080/sudoku/new?level=' + hardLevel).map((data) => {
             return <SudokuGenResponse>data;
         });
     }

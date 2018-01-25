@@ -36,8 +36,8 @@ public class SudokuController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/new")
-    public SudokuBoardWebDTO generateNewGame() {
-        sudokuGenerator.nextBoard(50);
+    public SudokuBoardWebDTO generateNewGame(@RequestParam Integer level) {
+        sudokuGenerator.nextBoard(level);
         return sudokuGenerator.getSudokuDTO();
     }
 

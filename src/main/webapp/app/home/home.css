@@ -20,6 +20,12 @@ Main page styles
     background: #e0ded5;
 }
 
+.welcomeScreen{
+    min-height: 500px;
+    width: 80%;
+
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media
 only screen and (-webkit-min-device-pixel-ratio: 2),

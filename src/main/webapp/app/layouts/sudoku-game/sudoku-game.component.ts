@@ -23,8 +23,8 @@ export class SudokuGameComponent implements OnInit {
         this.init();
     }
 
-    generateNew(): void {
-        this.sudokuRequest.generateNew().subscribe(
+    generateNew(hardLevel: number): void {
+        this.sudokuRequest.generateNew(hardLevel).subscribe(
             data => this.newBoard = data
         );
     }

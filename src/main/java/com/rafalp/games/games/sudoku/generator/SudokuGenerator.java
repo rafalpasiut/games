@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 @Component
 public class SudokuGenerator {
 
-    public static final int MAX_GEN_TRIES = 100;
+    public static final int MAX_GEN_TRIES = 80;
     private int[][] board;
     private SudokuBoard sudokuBoard;
     private SudokuSolver sudokuSolver = new EnchancedBacktrackingAlgorithm();
@@ -25,6 +25,20 @@ public class SudokuGenerator {
     private SudokuBoard solution;
 
     public int[][] nextBoard(int difficulty) {
+        switch (difficulty) {
+            case 1:
+                difficulty = 45;
+                break;
+            case 2:
+                difficulty = 50;
+                break;
+            case 3:
+                difficulty = 55;
+                break;
+            default:
+                difficulty = 50;
+                break;
+        }
         board = new int[SudokuBoard.SUDOKU_SIZE][SudokuBoard.SUDOKU_SIZE];
         nextCell(0, 0);
         makeHoles(difficulty);
@@ -129,7 +143,7 @@ public class SudokuGenerator {
                 board[cellCoords.x][cellCoords.y] = cellValue;
                 tryCount++;
             }
-            if (remainingHoles < 1 || tryCount>=MAX_GEN_TRIES) {
+            if (remainingHoles < 1 || tryCount >= MAX_GEN_TRIES) {
                 finish = true;
             }
         }
@@ -171,7 +185,7 @@ public class SudokuGenerator {
         System.out.println();
     }
 
-    public SudokuBoardWebDTO getSudokuDTO(){
+    public SudokuBoardWebDTO getSudokuDTO() {
         return sudokuMapper.mapBoardToWebDTO(board, solution);
     }
 
