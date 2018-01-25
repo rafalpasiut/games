@@ -1,42 +1,28 @@
 package com.rafalp.games.games.sudoku.board;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class CellWebDTO {
 
     private int value;
     private int solution;
-    private boolean isDraftNumber;
+    private Boolean draftNumber;
     private int x;
     private int y;
 
-    public CellWebDTO(int value, int solution, boolean isDraftNumber, int x, int y) {
+    public CellWebDTO(int value, int solution, boolean draftNumber, int x, int y) {
         this.value = value;
         this.solution = solution;
-        this.isDraftNumber = isDraftNumber;
+        this.draftNumber = draftNumber;
         this.x = x;
         this.y = y;
     }
 
-    public int getValue() {
-        return value;
-    }
 
-    public int getSolution() {
-        return solution;
-    }
-
-    public boolean isDraftNumber() {
-        return isDraftNumber;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
 }

@@ -76,6 +76,7 @@ export class SudokuBoardComponent implements OnInit {
         } else if (charCode === 8 || charCode === 46 || charCode === 32) {
             console.log('backspace');
             this.setCellValue(0, i, j);
+            this.saveChangedSudoku();
         } else if (charCode === 9 || charCode === 38 || charCode === 39) {
             return true;
         }
@@ -88,7 +89,7 @@ export class SudokuBoardComponent implements OnInit {
         console.log("SAVING");
         return this.http.put('http://localhost:8080/sudoku/saveSudoku', sudokuToSave).subscribe(res => {
             console.log(res);
-        });;
+        });
     }
 
     setCellValue(value, i, j): void {

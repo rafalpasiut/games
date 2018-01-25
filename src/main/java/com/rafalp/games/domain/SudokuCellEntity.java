@@ -7,24 +7,22 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity(name = "cells")
+@Entity(name = "SUDOKU_CELLS")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CellEntity {
+public class SudokuCellEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
+    private Long userId;
     private Integer value;
     private Integer solution;
     private Integer rowNumber;
     private Integer columnNumber;
-    private boolean draftNumber;
+    private Boolean draftNumber;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn (name = "ROW_ID")
-    private RowEntity row;
 }

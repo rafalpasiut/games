@@ -1,23 +1,22 @@
 package com.rafalp.games.games.sudoku.board;
 
-import com.rafalp.games.domain.CellEntity;
-import com.rafalp.games.domain.RowEntity;
-import com.rafalp.games.domain.SudokuEntity;
+import com.rafalp.games.domain.SudokuCellEntity;
 import com.rafalp.games.games.sudoku.creator.CellValueDTO;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class SudokuMapper {
 
-    public SudokuBoard boardFromArray(int[][] board){
+    public SudokuBoard boardFromArray(int[][] board) {
         SudokuBoard sudokuBoard = new SudokuBoard();
-        int i=1;
-        for(int[] row : board){
-            int j=1;
-            for(int cellValue : row){
-                sudokuBoard.setCell(new CellValueDTO(i,j,cellValue));
+        int i = 1;
+        for (int[] row : board) {
+            int j = 1;
+            for (int cellValue : row) {
+                sudokuBoard.setCell(new CellValueDTO(i, j, cellValue));
                 j++;
             }
             i++;
@@ -25,26 +24,26 @@ public class SudokuMapper {
         return sudokuBoard;
     }
 
-    public int[][] sudokuArrayFromBoard(SudokuBoard sudokuBoard){
+    public int[][] sudokuArrayFromBoard(SudokuBoard sudokuBoard) {
         int[][] board = new int[9][9];
 
         sudokuBoard.getRows().stream().forEach(row -> {
             row.getCells().stream().forEach(cell -> {
-                board[cell.getRowNumber()-1][cell.getColumnNumber()-1] = cell.getValue();
+                board[cell.getRowNumber() - 1][cell.getColumnNumber() - 1] = cell.getValue();
             });
         });
         return board;
     }
 
-    public SudokuBoardWebDTO mapBoardToWebDTO(int[][] board, SudokuBoard solution){
+    public SudokuBoardWebDTO mapBoardToWebDTO(int[][] board, SudokuBoard solution) {
         int[][] solutionArray = sudokuArrayFromBoard(solution);
         CellWebDTO[][] webBoard = new CellWebDTO[9][9];
-        int i=0,j;
-        for(int[] row : board){
-            j=0;
-            for(int cell : row){
+        int i = 0, j;
+        for (int[] row : board) {
+            j = 0;
+            for (int cell : row) {
                 boolean isDraft = (board[i][j] != 0);
-                webBoard[i][j] = new CellWebDTO(cell,solutionArray[i][j],isDraft,i,j);
+                webBoard[i][j] = new CellWebDTO(cell, solutionArray[i][j], isDraft, i, j);
                 j++;
             }
             i++;
@@ -52,34 +51,55 @@ public class SudokuMapper {
         return new SudokuBoardWebDTO(webBoard);
     }
 
-    public SudokuEntity sudokuWebToSudokuEntity(SudokuBoardWebDTO boardWebDTO){
-        SudokuEntity sudoku = new SudokuEntity(boardWebDTO.getUserId(),new ArrayList<>());
+    public List<SudokuCellEntity> sudokuWebToSudokuCellEntity(SudokuBoardWebDTO boardWebDTO) {
 
-        for(CellWebDTO[] row : boardWebDTO.getBoard()){
-            sudoku.addRows(mapCellsRowToRowEntity(row));
+        List<SudokuCellEntity> cells = new ArrayList<>();
+
+        for (CellWebDTO[] row : boardWebDTO.getBoard()) {
+            for (CellWebDTO cellWebDTO : row) {
+                cells.add(mapWebCellToCellEntity(cellWebDTO, boardWebDTO.getUserId()));
+            }
         }
-        return sudoku;
+        return cells;
     }
 
-    private RowEntity mapCellsRowToRowEntity(CellWebDTO[] cellRow){
+    public SudokuBoardWebDTO mapCellsEntitiesToWebBoardDto(List<SudokuCellEntity> cells) {
 
-        RowEntity rowEntity = new RowEntity();
+        CellWebDTO[][] webBoard = new CellWebDTO[9][9];
 
-        for(CellWebDTO cell : cellRow){
-            rowEntity.addCell(mapWebCellToCellEntity(cell));
+        for (SudokuCellEntity cell : cells) {
+            webBoard[cell.getRowNumber()][cell.getColumnNumber()] = mapCellEntityToWebCell(cell);
         }
-        return rowEntity;
+
+        return new SudokuBoardWebDTO(webBoard);
     }
 
-    private CellEntity mapWebCellToCellEntity(CellWebDTO cellWebDTO){
-        CellEntity cellEntity = new CellEntity();
+    private SudokuCellEntity mapWebCellToCellEntity(CellWebDTO cellWebDTO, Long userId) {
 
-        cellEntity.setValue(cellWebDTO.getValue());
-        cellEntity.setSolution(cellWebDTO.getSolution());
-        cellEntity.setRowNumber(cellWebDTO.getX());
-        cellEntity.setColumnNumber(cellWebDTO.getY());
-        cellEntity.setDraftNumber(cellWebDTO.isDraftNumber());
+        SudokuCellEntity sudokuCellEntity = new SudokuCellEntity();
 
-        return cellEntity;
+        sudokuCellEntity.setUserId(userId);
+        sudokuCellEntity.setValue(cellWebDTO.getValue());
+        sudokuCellEntity.setSolution(cellWebDTO.getSolution());
+        sudokuCellEntity.setRowNumber(cellWebDTO.getX());
+        sudokuCellEntity.setColumnNumber(cellWebDTO.getY());
+        sudokuCellEntity.setDraftNumber(cellWebDTO.getDraftNumber());
+
+        return sudokuCellEntity;
     }
+
+    private CellWebDTO mapCellEntityToWebCell(SudokuCellEntity cell) {
+
+        CellWebDTO cellWebDTO = new CellWebDTO();
+
+        cellWebDTO.setValue(cell.getValue());
+        cellWebDTO.setSolution(cell.getSolution());
+        cellWebDTO.setX(cell.getRowNumber());
+        cellWebDTO.setY(cell.getColumnNumber());
+        cellWebDTO.setDraftNumber(cell.getDraftNumber());
+
+        return cellWebDTO;
+    }
+
+
 }
