@@ -12,6 +12,7 @@ export class SudokuBoardComponent implements OnInit {
 
     board: Cell[][];
     draftBoard: Cell[][];
+    isDone = false;
 
     @Input() solutionVisibleSubject: Subject<boolean>;
     @Input() newBoardSubject: Subject<SudokuGenResponse>;
@@ -39,6 +40,7 @@ export class SudokuBoardComponent implements OnInit {
 
     createNewSudoku(sudoku: SudokuGenResponse): void {
         this.setDraftAndBoard(sudoku.board);
+        this.isDone = false;
     }
 
     setDraftAndBoard(board: Cell[][]) {
@@ -49,7 +51,7 @@ export class SudokuBoardComponent implements OnInit {
                 this.board[i][j] = new Cell(board[i][j].value, board[i][j].solution, board[i][j].x, board[i][j].y, board[i][j].draftNumber);
             }
         }
-        console.log(this.board);
+
         this.draftBoard = [];
         for (let i = 0; i < 9; i++) {
             this.draftBoard[i] = [];
@@ -78,9 +80,11 @@ export class SudokuBoardComponent implements OnInit {
         if (charCode > 48 && charCode < 58) {
             this.setCellValue(Number(String.fromCharCode(charCode)), i, j);
             this.saveChangedSudoku();
+            this.checkIsSudokuDone();
         } else if (charCode > 96 && charCode < 106) {
             this.setCellValue(Number(String.fromCharCode(charCode - 48)), i, j);
             this.saveChangedSudoku();
+            this.checkIsSudokuDone();
         } else if (charCode === 8 || charCode === 46 || charCode === 32) {
             this.setCellValue(0, i, j);
             this.saveChangedSudoku();
@@ -98,6 +102,27 @@ export class SudokuBoardComponent implements OnInit {
     setCellValue(value, i, j): void {
         console.log(value);
         this.board[i][j].setValue(value);
+    }
+
+    checkIsSudokuDone(): void {
+        if (!this.isDone) {
+            let done = true;
+            for (let i = 0; i < this.board.length; i++) {
+                for (let j = 0; j < this.board.length; j++) {
+                    if (this.board[i][j].value !== this.board[i][j].solution) {
+                        done = false;
+                        break;
+                    }
+                }
+                if (!done) {
+                    break;
+                }
+            }
+            if (done) {
+                this.isDone = true;
+                alert('Congratulation! You have solved Sudoku!');
+            }
+        }
     }
 }
 

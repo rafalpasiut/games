@@ -35,23 +35,27 @@ public class GameMaster {
         System.out.println("You chose: " + champion.getName());
     }
 
-    public void fightResult(FightResult result, Champion player, Champion computer) {
+    public String fightResult(FightResult result, Champion player, Champion computer) {
+        String output = "";
         System.out.println();
         switch (result) {
             case TIE:
-                System.out.println("It`s a tie!");
+                output = "It`s a tie!";
+                System.out.println(output);
                 break;
             case WIN:
-                System.out.println(player.getName() + " " + player.getWins().get(computer.getName()) + " " + computer.getName() + "!");
+                output = player.getName() + " " + player.getWins().get(computer.getName()) + " " + computer.getName() + "!";
+                System.out.println(output);
                 System.out.println("You win.");
                 break;
             case LOOSE:
-                System.out.println(computer.getName() + " " + computer.getWins().get(player.getName()) + " " + player.getName() + "!");
+                output = computer.getName() + " " + computer.getWins().get(player.getName()) + " " + player.getName() + "!";
+                System.out.println(output);
                 System.out.println("You loose.");
                 break;
         }
-        sleep(2);
         System.out.println();
+        return output;
     }
 
     public void computerChampionSelected(Champion champion) {

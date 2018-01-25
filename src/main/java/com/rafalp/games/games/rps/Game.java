@@ -11,7 +11,7 @@ public class Game {
     private Integer maxCount;
     private Integer roundCount;
     private final ArrayList<Champion> champions;
-    private GameMaster gameMaster;
+    protected GameMaster gameMaster;
     private boolean quitGame = false;
     private boolean restartGame = false;
     private String playerName;
@@ -141,13 +141,13 @@ public class Game {
         return null;
     }
 
-    private Champion randomChampion() {
+    protected Champion randomChampion() {
         Random random = new Random();
         return champions.get(random.nextInt(champions.size()));
     }
 
-    private FightResult fight(Champion player, Champion computer) {
-        if (player == computer) {
+    protected FightResult fight(Champion player, Champion computer) {
+        if (player.equals(computer)) {
             return FightResult.TIE;   //tie
         } else if (player.getWins().containsKey(computer.getName())) {
             return FightResult.WIN;   //player wins
