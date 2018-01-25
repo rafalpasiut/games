@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Cell} from "./sudoku-board/sudoku-board.component";
-import {SudokuGameRequestsService} from "./sudoku-game-requests.service";
-import {JhiEventManager} from "ng-jhipster";
+import {Cell} from './sudoku-board/sudoku-board.component';
+import {SudokuGameRequestsService} from './sudoku-game-requests.service';
+import {JhiEventManager} from 'ng-jhipster';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
     selector: 'jhi-sudoku-game',
@@ -10,12 +11,13 @@ import {JhiEventManager} from "ng-jhipster";
 })
 export class SudokuGameComponent implements OnInit {
 
-    newBoard?: SudokuGenResponse;
+    newBoardSubject: Subject<SudokuGenResponse> = new Subject();
     loggedUserId: number;
+    solutionVisible = false;
+    solutionVisibleSubject: Subject<boolean> = new Subject();
 
     constructor(private sudokuRequest: SudokuGameRequestsService,
                 private eventManager: JhiEventManager) {
-
     }
 
     ngOnInit() {
@@ -23,24 +25,30 @@ export class SudokuGameComponent implements OnInit {
         this.init();
     }
 
-    generateNew(hardLevel: number): void {
-        this.sudokuRequest.generateNew(hardLevel).subscribe(
-            data => this.newBoard = data
+    generateNew(difficultLevel: number): void {
+        this.sudokuRequest.generateNew(difficultLevel).subscribe(
+            (data) => this.newBoardSubject.next(data)
         );
     }
 
     init(): void {
-        this.sudokuRequest.getSavedSudoku().then(observable => observable.subscribe(
-            data => {
-                this.newBoard = data;
+        this.sudokuRequest.getSavedSudoku().then((observable) => observable.subscribe(
+            (data) => {
+                this.newBoardSubject.next(data);
                 console.log(data);
             }
         ));
     }
 
-    registerAuthenticationSuccess() {
+    showSolution(): void {
+
+        this.solutionVisible = !this.solutionVisible;
+        this.solutionVisibleSubject.next(this.solutionVisible);
+        console.log('sent');
+    }
+
+    registerAuthenticationSuccess(): void {
         this.eventManager.subscribe('authenticationSuccess', (message) => {
-            console.log('kdjskdjsk');
             this.init();
         });
     }

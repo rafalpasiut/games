@@ -6,7 +6,7 @@ import { ProfileService } from '../profiles/profile.service';
 import { Principal, LoginModalService, LoginService } from '../../shared';
 
 import { VERSION } from '../../app.constants';
-import {JhiEventManager} from "ng-jhipster";
+import {JhiEventManager} from 'ng-jhipster';
 
 @Component({
     selector: 'jhi-navbar',

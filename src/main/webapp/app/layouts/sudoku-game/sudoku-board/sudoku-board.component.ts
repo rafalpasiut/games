@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SudokuGenResponse} from '../sudoku-game.component';
-import {SudokuGameRequestsService} from "../sudoku-game-requests.service";
+import {SudokuGameRequestsService} from '../sudoku-game-requests.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
     selector: 'jhi-sudoku-board',
@@ -9,23 +10,32 @@ import {SudokuGameRequestsService} from "../sudoku-game-requests.service";
 })
 export class SudokuBoardComponent implements OnInit {
 
-
     board: Cell[][];
     draftBoard: Cell[][];
 
-    @Input() public newSudokuResponse: SudokuGenResponse;
+    @Input() solutionVisibleSubject: Subject<boolean>;
+    @Input() newBoardSubject: Subject<SudokuGenResponse>;
 
     constructor(private sudokuRequest: SudokuGameRequestsService) {
     }
 
     ngOnInit() {
-
+        this.solutionVisibleSubject.subscribe((event) => this.showSolution(event));
+        this.newBoardSubject.subscribe((event) => this.createNewSudoku(event));
     }
 
-    ngOnChanges(change) {
-        this.createNewSudoku(this.newSudokuResponse);
+    ngOnDestroy() {
+        this.solutionVisibleSubject.unsubscribe();
+        this.newBoardSubject.unsubscribe();
     }
 
+    showSolution(visible: boolean): void {
+        for (let i = 0; i < this.board.length; i++) {
+            for (let j = 0; j < this.board.length; j++) {
+                this.board[i][j].setSolutionVisibility(visible);
+            }
+        }
+    }
 
     createNewSudoku(sudoku: SudokuGenResponse): void {
         this.setDraftAndBoard(sudoku.board);
@@ -64,9 +74,7 @@ export class SudokuBoardComponent implements OnInit {
     }
 
     valueEntered(event, i, j) {
-        console.log('key pressed');
         const charCode = (event.which) ? event.which : event.keyCode;
-        console.log(charCode);
         if (charCode > 48 && charCode < 58) {
             this.setCellValue(Number(String.fromCharCode(charCode)), i, j);
             this.saveChangedSudoku();
@@ -74,7 +82,6 @@ export class SudokuBoardComponent implements OnInit {
             this.setCellValue(Number(String.fromCharCode(charCode - 48)), i, j);
             this.saveChangedSudoku();
         } else if (charCode === 8 || charCode === 46 || charCode === 32) {
-            console.log('backspace');
             this.setCellValue(0, i, j);
             this.saveChangedSudoku();
         } else if (charCode === 9 || charCode === 38 || charCode === 39) {
@@ -83,8 +90,8 @@ export class SudokuBoardComponent implements OnInit {
         return false;
     }
 
-    saveChangedSudoku(){
-        const sudokuToSave: SudokuGenResponse = { board: this.board, userId: 5 };
+    saveChangedSudoku() {
+        const sudokuToSave: SudokuGenResponse = {board: this.board, userId: 5};
         this.sudokuRequest.saveChangedSudoku(sudokuToSave);
     }
 
@@ -100,6 +107,7 @@ export class Cell {
     x: number;
     y: number;
     draftNumber: boolean;
+    solutionVisible: boolean;
 
     constructor(value, solution, x, y, isDraftNumber) {
         this.value = value;
@@ -109,6 +117,11 @@ export class Cell {
         this.draftNumber = isDraftNumber;
     }
 
+    setSolutionVisibility(visible: boolean): void {
+        if (this.value !== this.solution) {
+            this.solutionVisible = visible;
+        }
+    }
 
     public setValue(value): void {
         this.value = value;
@@ -118,22 +131,32 @@ export class Cell {
         return this.value === 0 ? '' : this.value.toString();
     }
 
+    public getValueOrSolution(): string {
+        if (this.solutionVisible) {
+            return this.solution.toString();
+        } else {
+            return this.value === 0 ? '' : this.value.toString();
+        }
+    }
+
     public isEditable(): boolean {
-        return !this.draftNumber;
+        return (!this.draftNumber && !this.solutionVisible);
     }
 
     getColorStyle(): String {
         if (this.draftNumber) {
-            return 'draft-cell';
+            return 'draftCell';
         } else if (this.value === this.solution) {
-            return 'ok-cell';
+            return 'okCell';
+        } else if (this.solutionVisible === true) {
+            return 'solutionCell';
         } else {
-            return 'wrong-cell';
+            return 'wrongCell';
         }
     }
 
     getBorderStyle(): string {
-        let style: string = '';
+        let style = '';
         if ((this.y + 1) % 3 === 0) {
             style += ' right-border-cell ';
         }

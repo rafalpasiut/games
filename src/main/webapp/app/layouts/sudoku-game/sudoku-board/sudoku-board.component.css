@@ -46,16 +46,20 @@ div {
     margin: 0px;
 }
 
-.ok-cell{
+.okCell{
     color: #11da2a;
 }
 
-.wrong-cell{
+.wrongCell{
     color: #da0d12;
 }
 
-.draft-cell{
+.draftCell{
     color: black;
+}
+
+.solutionCell{
+    color: #2d4373;
 }
 
 .right-border-cell{
