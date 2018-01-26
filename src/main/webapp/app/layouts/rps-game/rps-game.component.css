@@ -1,4 +1,4 @@
-.resultBoard{
+.resultBoard {
     font-size: 5em;
     font-weight: 500;
     color: black;
@@ -6,7 +6,7 @@
     margin-bottom: 10px;
 }
 
-.fightResult{
+.fightResult {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -16,19 +16,19 @@
     font-weight: 600;
 }
 
-.fightResult.fightWin{
+.fightResult.fightWin {
     color: #1f811f;
 }
 
-.fightResult.fightLost{
+.fightResult.fightLost {
     color: #da0d12;
 }
 
-.fightResult.fightTie{
+.fightResult.fightTie {
     color: #4b6d92;
 }
 
-.fightResult.fightNone{
+.fightResult.fightNone {
     border-color: transparent;
     color: transparent;
 }
@@ -42,16 +42,16 @@
     text-align: center;
 }
 
-.selection{
+.selection {
     height: 100%;
-    width: 300px;
-    overflow: auto;
+    width: 100%;
+    overflow: hidden;
 }
 
-.selection.player{
+.selection.player {
 }
 
-.selection.opponent{
+.selection.opponent {
 }
 
 .championOptions {
@@ -61,30 +61,77 @@
     margin-bottom: 20px;
 }
 
-.championButton{
-    font-size: 1.5em;
-    min-width: 150px;
+@media all and (max-width: 800px) {
+    .championOptions {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 }
 
-.border{
+.championButton {
+    font-size: 1.5em;
+    min-width: 150px;
+    margin: 5px;
+}
+
+.border {
     border: solid black 2px;
 }
 
-.row{
+.row {
     text-align: center;
     width: 100%;
 }
 
-.cell{
+.cell {
     display: inline-block;
     width: 30%;
     height: 100%;
     overflow: hidden;
 }
 
-.middle{
+.middle {
     display: inline-block;
     margin: 0 auto;
     width: 100%;
     min-height: 300px;
 }
+
+.championImage {
+    width: 250px;
+    overflow: hidden;
+}
+
+@media all and (max-width: 1200px) {
+
+    .championImage {
+        width: 200px;
+    }
+
+    @media all and (max-width: 900px) {
+        .middle {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            text-align: center;
+        }
+
+        .cell {
+            width: 100%;
+        }
+
+        .championImage {
+            width: 125px;
+        }
+
+        .selection {
+            margin-bottom: 10px;
+            margin-top: 0;
+        }
+    }
+}
+
+
+

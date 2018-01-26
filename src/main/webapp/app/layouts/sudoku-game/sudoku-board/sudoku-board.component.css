@@ -1,6 +1,8 @@
 body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    display: flex;
 }
 
 div {
@@ -10,8 +12,8 @@ div {
 
 .sudokuBorders {
     display: inline-block;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     float: none;
     border: 10px solid gray;
     background-color: transparent;
@@ -43,7 +45,7 @@ div {
     vertical-align: middle;
     background: rgba(248,244,255,0.35);
     border: solid grey 1px;
-    margin: 0px;
+    margin: 0;
 }
 
 .okCell{

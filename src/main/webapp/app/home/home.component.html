@@ -1,31 +1,25 @@
 <div class="row">
     <div class="col-md-2 gameMenu">
-        <button type="submit" class="btn-lg btn btn-success gameButton" (click)="selectGame('Sudoku')">
+        <button type="submit" class="btn-lg btn btn-dark gameButton" (click)="selectGame('Sudoku')">
             Sudoku
         </button>
-        <button type="submit" class="btn-lg btn btn-success gameButton" (click)="selectGame('RPS')">
+        <button type="submit" class="btn-lg btn btn-dark gameButton" (click)="selectGame('RPS')">
             RPS
         </button>
-      <!--  <button type="submit" class="gameSelectionButton">
-            <img src="../../content/images/Sudoku.png" width="100" alt="Sudoku submit" (click)="selectGame('Sudoku')"/>
-        </button>
-        <button type="submit" class="gameSelectionButton">
-            <img src="../../content/images/RPSLS.png" width="100" alt="RPS submit" (click)="selectGame('RPS')"/>
-        </button> -->
     </div>
     <div class="col-md-9 streacher" [ngSwitch]="selectedGame">
         <div *ngSwitchCase="'Sudoku'">
-            <div class="gameContainer">
+            <div class="gameContainer solidLeftBorder">
                 <jhi-sudoku-game></jhi-sudoku-game>
             </div>
         </div>
         <div *ngSwitchCase="'RPS'">
-            <div class="gameContainer">
+            <div class="gameContainer solidLeftBorder">
                 <jhi-rps-game></jhi-rps-game>
             </div>
         </div>
         <div *ngSwitchCase="'none'">
-            <div class="gameContainer text-center welcomeScreen">
+            <div class="gameContainer text-center welcomeScreen solidLeftBorder">
                 <h1>Welcome to Games Portal</h1>
                 <p>Select the game and enjoy !</p>
             </div>

@@ -31,19 +31,24 @@ Main page styles
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    border-left: solid black 5px;
+
     width: 100%;
 }
+@media all and (min-width: 1000px) {
+    .solidLeftBorder {
+        border-left: solid black 5px;
+    }
+}
+
 .streacher{
     display: inline-block;
     margin: 0 auto;
-    padding: 0px;
+    padding: 0;
 }
 .gameButton{
     margin: 10px 0px 10px 0px;
-    background: #3fbc37;
+    background-color: #6078c1;
     width: 100%;
-    display: block;
 }
 
 .gameMenu{
@@ -51,10 +56,13 @@ Main page styles
     position: relative;
     height: 100%;
     width: 100%;
-    order: 0;
-    flex: 1 1 auto;
-    align-self: stretch;
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.row{
+    display: flex;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
