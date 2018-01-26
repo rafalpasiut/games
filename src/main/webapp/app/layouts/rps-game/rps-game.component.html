@@ -1,45 +1,45 @@
 <div class="row">
     <div class="resultBoard">
-        0 : 1
+        {{winCount}} : {{looseCount}}
     </div>
 </div>
 <div class="row">
     <div class="middle">
         <div class="cell">
             <div class="selection player">
-                Rock
+                {{playerChampion}}
             </div>
         </div>
         <div class="cell">
                 <div class="fightResult">
-                    WIN
+                    {{fightResultText}}
                 </div>
                 <div class="fightResultMessage">
-                    Rock smashes scissors!
+                    {{fightMessage}}
                 </div>
         </div>
         <div class="cell">
             <div class="selection opponent">
-                Scissors
+                {{opponentChampion}}
             </div>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="championOptions">
-        <button type="submit" class="btn-lg btn-dark btn btn-primary championButton">
+        <button type="submit" class="btn-lg btn-dark btn btn-primary championButton" (click)="fight('Rock')">
             Rock
         </button>
-        <button type="submit" class="btn-lg btn-dark btn btn-primary championButton">
+        <button type="submit" class="btn-lg btn-dark btn btn-primary championButton" (click)="fight('Paper')">
             Paper
         </button>
-        <button type="submit" class="btn-lg btn-dark btn btn-primary championButton">
+        <button type="submit" class="btn-lg btn-dark btn btn-primary championButton" (click)="fight('Scissors')">
             Scissors
         </button>
-        <button type="submit" class="btn-lg btn-dark btn btn-primary championButton">
+        <button type="submit" class="btn-lg btn-dark btn btn-primary championButton" (click)="fight('Spock')">
             Spock
         </button>
-        <button type="submit" class="btn-lg btn-dark btn btn-primary championButton">
+        <button type="submit" class="btn-lg btn-dark btn btn-primary championButton" (click)="fight('Lizard')">
             Lizard
         </button>
     </div>
