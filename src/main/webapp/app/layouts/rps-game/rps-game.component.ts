@@ -19,11 +19,17 @@ export class RpsGameComponent implements OnInit {
     opponentChampion = '';
     gameFinished = false;
     gameWon = false;
+    images = new ChampionImages();
+    playerImage: string;
+    opponentImage: string;
+
 
     constructor(private rpsRequestServices: RpsGameRequestService) {
+
     }
 
     ngOnInit() {
+        this.setImages();
     }
 
     fight(champion: string): void {
@@ -38,8 +44,10 @@ export class RpsGameComponent implements OnInit {
             } else if (result.fightResult === "LOOSE") {
                 this.looseCount++;
             }
+            this.setImages();
+            console.log(this.playerImage);
             this.checkIfGameFinished();
-            if(this.gameFinished){
+            if (this.gameFinished) {
                 this.fightResultText = this.gameWon ? 'Game won!' : 'Game lost';
                 this.fightMessage = this.fightMessage + ' ' + this.fightResultText;
             }
@@ -56,8 +64,8 @@ export class RpsGameComponent implements OnInit {
         }
     }
 
-    clearIfFinished():void{
-        if(this.gameFinished){
+    clearIfFinished(): void {
+        if (this.gameFinished) {
             this.gameFinished = false;
             this.clearGame();
         }
@@ -72,6 +80,11 @@ export class RpsGameComponent implements OnInit {
         this.opponentChampion = '';
     }
 
+    setImages(): void{
+        this.playerImage = this.images.createPath(this.playerChampion);
+        this.opponentImage = this.images.createPath(this.opponentChampion);
+    }
+
 }
 
 export interface FightResult {
@@ -79,4 +92,17 @@ export interface FightResult {
     opponentChampion: string;
     fightResult: string;
     fightMessage: string;
+}
+
+class ChampionImages {
+    rootPath = '../../../content/images/';
+    extension = '.png';
+
+    createPath(champion: string): string {
+        if (champion === '') {
+            return this.rootPath + 'Empty' + this.extension;
+        } else {
+            return this.rootPath + champion + this.extension;
+        }
+    }
 }

@@ -1,10 +1,9 @@
 .resultBoard{
-    border: solid 5px black;
-    font-size: 3em;
+    font-size: 5em;
     font-weight: 500;
     color: black;
     margin: 0 auto;
-    padding: 5px;
+    margin-bottom: 10px;
 }
 
 .fightResult{
@@ -62,7 +61,6 @@
     display: inline-block;
     width: 30%;
     height: 100%;
-    border: solid black 2px;
     overflow: hidden;
 }
 
@@ -71,5 +69,4 @@
     margin: 0 auto;
     width: 100%;
     min-height: 300px;
-    border: solid black 1px;
 }

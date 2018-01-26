@@ -7,7 +7,7 @@
     <div class="middle">
         <div class="cell">
             <div class="selection player">
-                {{playerChampion}}
+                <img [src] = "playerImage" width="250" alt={{playerChampion}}/>
             </div>
         </div>
         <div class="cell">
@@ -20,7 +20,7 @@
         </div>
         <div class="cell">
             <div class="selection opponent">
-                {{opponentChampion}}
+                <img [src]="opponentImage" width="250" alt={{opponentChampion}}/>
             </div>
         </div>
     </div>
@@ -44,3 +44,9 @@
         </button>
     </div>
 </div>
+<img src = "../../../content/images/Lizard.png"/>
+<img [src] = "playerImage"/>
+<img [src] = "playerImage"/>
+<img [src] = "playerImage"/>
+<img [src] = "playerImage"/>
+

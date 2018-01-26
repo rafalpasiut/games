@@ -10,7 +10,7 @@ Main page styles
     background-size: contain;
 }
 
-.gameSelectionButton{
+.gameSelectionButton {
     border: 0;
     background: transparent;
     outline: none;
@@ -20,20 +20,18 @@ Main page styles
     background: #e0ded5;
 }
 
-.welcomeScreen{
+.welcomeScreen {
     min-height: 500px;
     width: 80%;
 
 }
 
+.gameContainer {
+    background: white;
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-min-device-pixel-ratio: 2/1),
-only screen and (        min-device-pixel-ratio: 2),
-only screen and (                min-resolution: 192dpi),
-only screen and (                min-resolution: 2dppx) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (   min--moz-device-pixel-ratio: 2), only screen and (     -o-min-device-pixel-ratio: 2/1), only screen and (        min-device-pixel-ratio: 2), only screen and (                min-resolution: 192dpi), only screen and (                min-resolution: 2dppx) {
     .hipster {
         background: url("../../content/images/hipster2x.png") no-repeat center top;
         background-size: contain;
