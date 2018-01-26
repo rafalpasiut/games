@@ -1,0 +1,75 @@
+.resultBoard{
+    border: solid 5px black;
+    font-size: 3em;
+    font-weight: 500;
+    color: black;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.fightResult{
+    border: solid black 1px;
+    margin: 0 auto;
+    height: 30%;
+    text-align: center;
+}
+
+.fightResultMessage {
+    border: solid black 1px;
+    font-size: 2em;
+    color: Black;
+    margin: 0 auto;
+    height: 70%;
+    text-align: center;
+}
+
+.selection{
+    height: 100%;
+    width: 300px;
+    overflow: hidden;
+}
+
+.selection.player{
+    border: 5px blue solid;
+}
+
+.selection.opponent{
+    border: 5px red solid;
+}
+
+.championOptions {
+    margin: 0 auto;
+    align-content: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.championButton{
+    font-size: 1.5em;
+    min-width: 150px;
+}
+
+.border{
+    border: solid black 2px;
+}
+
+.row{
+    text-align: center;
+    width: 100%;
+}
+
+.cell{
+    display: inline-block;
+    width: 30%;
+    height: 100%;
+    border: solid black 2px;
+    overflow: hidden;
+}
+
+.middle{
+    display: inline-block;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 300px;
+    border: solid black 1px;
+}

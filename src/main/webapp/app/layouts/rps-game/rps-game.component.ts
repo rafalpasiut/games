@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'jhi-rps-game',
   templateUrl: './rps-game.component.html',
-  styles: []
+  styleUrls: [
+      './rps-game.component.css'
+  ]
 })
 export class RpsGameComponent implements OnInit {
 
