@@ -1,13 +1,19 @@
 <div class="row">
-    <div class="col-md-2">
-        <button type="submit" class="gameSelectionButton">
+    <div class="col-md-2 gameMenu">
+        <button type="submit" class="btn-lg btn btn-success gameButton" (click)="selectGame('Sudoku')">
+            Sudoku
+        </button>
+        <button type="submit" class="btn-lg btn btn-success gameButton" (click)="selectGame('RPS')">
+            RPS
+        </button>
+      <!--  <button type="submit" class="gameSelectionButton">
             <img src="../../content/images/Sudoku.png" width="100" alt="Sudoku submit" (click)="selectGame('Sudoku')"/>
         </button>
         <button type="submit" class="gameSelectionButton">
             <img src="../../content/images/RPSLS.png" width="100" alt="RPS submit" (click)="selectGame('RPS')"/>
-        </button>
+        </button> -->
     </div>
-    <div class="col-md-9" [ngSwitch]="selectedGame">
+    <div class="col-md-9 streacher" [ngSwitch]="selectedGame">
         <div *ngSwitchCase="'Sudoku'">
             <div class="gameContainer">
                 <jhi-sudoku-game></jhi-sudoku-game>

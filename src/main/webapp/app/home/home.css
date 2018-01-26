@@ -21,13 +21,40 @@ Main page styles
 }
 
 .welcomeScreen {
-    min-height: 500px;
-    width: 80%;
 
 }
 
 .gameContainer {
     background: white;
+    min-height: 560px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-left: solid black 5px;
+    width: 100%;
+}
+.streacher{
+    display: inline-block;
+    margin: 0 auto;
+    padding: 0px;
+}
+.gameButton{
+    margin: 10px 0px 10px 0px;
+    background: #3fbc37;
+    width: 100%;
+    display: block;
+}
+
+.gameMenu{
+    background: transparent;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    order: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+    overflow: auto;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */

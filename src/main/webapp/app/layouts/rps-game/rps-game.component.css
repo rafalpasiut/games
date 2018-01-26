@@ -45,7 +45,7 @@
 .selection{
     height: 100%;
     width: 300px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .selection.player{
@@ -55,7 +55,7 @@
 }
 
 .championOptions {
-    margin: 0 auto;
+    margin: auto;
     align-content: center;
     margin-top: 50px;
     margin-bottom: 20px;

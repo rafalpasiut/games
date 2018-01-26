@@ -182,10 +182,10 @@ export class Cell {
 
     getBorderStyle(): string {
         let style = '';
-        if ((this.y + 1) % 3 === 0 && (this.y+1)!==9) {
+        if ((this.y + 1) % 3 === 0 && (this.y + 1) !== 9) {
             style += ' right-border-cell ';
         }
-        if ((this.x + 1) % 3 === 0) {
+        if ((this.x + 1) % 3 === 0 && (this.x + 1) !== 9) {
             style += ' bottom-border-cell ';
         }
         return style;
