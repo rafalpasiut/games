@@ -6,12 +6,16 @@
 <div class="row">
     <div class="middle">
         <div class="cell">
-            <div class="selection player">
-                <img [src] = "playerImage" width="250" alt={{playerChampion}}/>
+            <div class="selection player" [ngSwitch]="playerChampion">
+                <img *ngSwitchCase="'Rock'" src = "../../../content/images/Rock.png" width="250" alt="Rock"/>
+                <img *ngSwitchCase="'Paper'" src = "../../../content/images/Paper.png" width="250" alt="Paper"/>
+                <img *ngSwitchCase="'Scissors'" src = "../../../content/images/Scissors.png" width="250" alt="Scisors"/>
+                <img *ngSwitchCase="'Spock'" src = "../../../content/images/Spock.png" width="250" alt="Spock"/>
+                <img *ngSwitchCase="'Lizard'" src = "../../../content/images/Lizard.png" width="250" alt="Lizard"/>
             </div>
         </div>
         <div class="cell">
-                <div class="fightResult">
+                <div ngClass="fightResult {{fightResultStyle}}">
                     {{fightResultText}}
                 </div>
                 <div class="fightResultMessage">
@@ -19,8 +23,12 @@
                 </div>
         </div>
         <div class="cell">
-            <div class="selection opponent">
-                <img [src]="opponentImage" width="250" alt={{opponentChampion}}/>
+            <div class="selection opponent" [ngSwitch]="opponentChampion">
+                <img *ngSwitchCase="'Rock'" src = "../../../content/images/Rock.png" width="250" alt="Rock"/>
+                <img *ngSwitchCase="'Paper'" src = "../../../content/images/Paper.png" width="250" alt="Paper"/>
+                <img *ngSwitchCase="'Scissors'" src = "../../../content/images/Scissors.png" width="250" alt="Scisors"/>
+                <img *ngSwitchCase="'Spock'" src = "../../../content/images/Spock.png" width="250" alt="Spock"/>
+                <img *ngSwitchCase="'Lizard'" src = "../../../content/images/Lizard.png" width="250" alt="Lizard"/>
             </div>
         </div>
     </div>
@@ -44,9 +52,3 @@
         </button>
     </div>
 </div>
-<img src = "../../../content/images/Lizard.png"/>
-<img [src] = "playerImage"/>
-<img [src] = "playerImage"/>
-<img [src] = "playerImage"/>
-<img [src] = "playerImage"/>
-

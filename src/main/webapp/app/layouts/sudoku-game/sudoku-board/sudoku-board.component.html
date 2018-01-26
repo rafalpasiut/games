@@ -1,4 +1,4 @@
-<div class="SudokuBorders">
+<div class="sudokuBorders">
     <div *ngFor="let row of board; let i = index;">
         <div *ngFor="let cell of row; let j = index;" ngClass="cell {{cell.getColorStyle()}} {{cell.getBorderStyle()}}" contentEditable={{cell.isEditable()}} (keydown) = "valueEntered($event,i,j);">
             {{cell.getValueOrSolution()}}

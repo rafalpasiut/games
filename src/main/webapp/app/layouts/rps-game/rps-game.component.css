@@ -7,15 +7,35 @@
 }
 
 .fightResult{
-    border: solid black 1px;
-    margin: 0 auto;
-    height: 30%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     text-align: center;
+    font-size: 3em;
+    height: 30%;
+    font-weight: 600;
+}
+
+.fightResult.fightWin{
+    color: #1f811f;
+}
+
+.fightResult.fightLost{
+    color: #da0d12;
+}
+
+.fightResult.fightTie{
+    color: #4b6d92;
+}
+
+.fightResult.fightNone{
+    border-color: transparent;
+    color: transparent;
 }
 
 .fightResultMessage {
-    border: solid black 1px;
     font-size: 2em;
+    font-weight: 200;
     color: Black;
     margin: 0 auto;
     height: 70%;
@@ -29,11 +49,9 @@
 }
 
 .selection.player{
-    border: 5px blue solid;
 }
 
 .selection.opponent{
-    border: 5px red solid;
 }
 
 .championOptions {
