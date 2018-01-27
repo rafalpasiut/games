@@ -48,7 +48,7 @@ public class GameMaster {
                 System.out.println(output);
                 System.out.println("You win.");
                 break;
-            case LOOSE:
+            case LOSE:
                 output = computer.getName() + " " + computer.getWins().get(player.getName()) + " " + player.getName() + "!";
                 System.out.println(output);
                 System.out.println("You loose.");

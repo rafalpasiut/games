@@ -90,7 +90,7 @@ public class Game {
                 gameMaster.fightResult(fightResult, playerChampion, computerChampion);
                 if (fightResult == FightResult.WIN) {
                     wins++;
-                } else if (fightResult == FightResult.LOOSE) {
+                } else if (fightResult == FightResult.LOSE) {
                     loses++;
                 }
                 roundFinished = true;
@@ -152,7 +152,7 @@ public class Game {
         } else if (player.getWins().containsKey(computer.getName())) {
             return FightResult.WIN;   //player wins
         } else {
-            return FightResult.LOOSE;   //computer wins
+            return FightResult.LOSE;   //computer wins
         }
     }
 

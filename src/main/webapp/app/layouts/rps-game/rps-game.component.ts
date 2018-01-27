@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RpsGameRequestService} from "./rps-game-request.service";
+import {RpsGameRequestService} from './rps-game-request.service';
 
 @Component({
     selector: 'jhi-rps-game',
@@ -31,13 +31,13 @@ export class RpsGameComponent implements OnInit {
     fight(champion: string): void {
         this.clearIfFinished();
         this.playerChampion = champion;
-        this.rpsRequestServices.fight(champion).subscribe(result => {
+        this.rpsRequestServices.fight(champion).subscribe((result) => {
             this.fightMessage = result.fightMessage;
             this.fightResultText = result.fightResult;
             this.opponentChampion = result.opponentChampion;
             if (result.fightResult === 'WIN') {
                 this.winCount++;
-            } else if (result.fightResult === "LOOSE") {
+            } else if (result.fightResult === 'LOSE') {
                 this.looseCount++;
             }
             this.checkIfGameFinished();
@@ -74,12 +74,12 @@ export class RpsGameComponent implements OnInit {
         this.opponentChampion = '';
     }
 
-    resolveFightResultStyle():void{
-        switch(this.fightResultText){
+    resolveFightResultStyle(): void {
+        switch (this.fightResultText) {
             case 'WIN':
                 this.fightResultStyle = 'fightWin';
                 break;
-            case 'LOOSE':
+            case 'LOSE':
                 this.fightResultStyle = 'fightLost';
                 break;
             case 'TIE':

@@ -8,7 +8,7 @@ import {GamesSharedModule} from '../shared';
 import {HOME_ROUTE, HomeComponent} from './';
 import {SudokuBoardComponent} from '../layouts/sudoku-game/sudoku-board/sudoku-board.component';
 import {SudokuGameRequestsService} from '../layouts/sudoku-game/sudoku-game-requests.service';
-import {RpsGameRequestService} from "../layouts/rps-game/rps-game-request.service";
+import {RpsGameRequestService} from '../layouts/rps-game/rps-game-request.service';
 
 @NgModule({
     imports: [
