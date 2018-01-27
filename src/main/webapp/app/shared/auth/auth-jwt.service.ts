@@ -24,6 +24,7 @@ export class AuthServerProvider {
             password: credentials.password,
             rememberMe: credentials.rememberMe
         };
+        console.log(SERVER_API_URL);
         return this.http.post(SERVER_API_URL + 'api/authenticate', data).map(authenticateSuccess.bind(this));
 
         function authenticateSuccess(resp) {

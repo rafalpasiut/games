@@ -26,8 +26,8 @@ export class SudokuBoardComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.solutionVisibleSubject.unsubscribe();
-        this.newBoardSubject.unsubscribe();
+        //this.solutionVisibleSubject.unsubscribe();
+        //this.newBoardSubject.unsubscribe();
     }
 
     showSolution(visible: boolean): void {

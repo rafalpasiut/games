@@ -136,7 +136,8 @@ public class SudokuGenerator {
                 solution = sudokuSolver.solve(sudokuBoard);
                 remainingHoles--;
             } catch (NoSolutionException e) {
-                e.printStackTrace();
+                board[cellCoords.x][cellCoords.y] = cellValue;
+                tryCount++;
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             } catch (NoUniqueSolution noUniqueSolution) {
