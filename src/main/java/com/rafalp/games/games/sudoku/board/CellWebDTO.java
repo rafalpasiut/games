@@ -5,9 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@NoArgsConstructor
-@Getter
-@Setter
 public class CellWebDTO {
 
     private int value;
@@ -15,6 +12,9 @@ public class CellWebDTO {
     private Boolean draftNumber;
     private int x;
     private int y;
+
+    public CellWebDTO() {
+    }
 
     public CellWebDTO(int value, int solution, boolean draftNumber, int x, int y) {
         this.value = value;
@@ -24,5 +24,43 @@ public class CellWebDTO {
         this.y = y;
     }
 
+    public int getValue() {
+        return value;
+    }
 
+    public int getSolution() {
+        return solution;
+    }
+
+    public Boolean getDraftNumber() {
+        return draftNumber;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public void setSolution(int solution) {
+        this.solution = solution;
+    }
+
+    public void setDraftNumber(Boolean draftNumber) {
+        this.draftNumber = draftNumber;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }

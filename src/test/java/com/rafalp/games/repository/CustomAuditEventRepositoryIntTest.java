@@ -1,6 +1,7 @@
 package com.rafalp.games.repository;
 
 import com.rafalp.games.GamesApp;
+import com.rafalp.games.config.ApplicationProperties;
 import com.rafalp.games.config.Constants;
 import com.rafalp.games.config.audit.AuditEventConverter;
 import com.rafalp.games.domain.PersistentAuditEvent;
@@ -9,10 +10,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.audit.AuditEvent;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 

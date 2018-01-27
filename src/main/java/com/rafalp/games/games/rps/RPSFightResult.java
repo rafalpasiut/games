@@ -7,7 +7,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class RPSFightResult {
 
@@ -15,4 +14,11 @@ public class RPSFightResult {
     String opponentChampion;
     String fightResult;
     String fightMessage;
+
+    public RPSFightResult(String userChampion, String opponentChampion, String fightResult, String fightMessage) {
+        this.userChampion = userChampion;
+        this.opponentChampion = opponentChampion;
+        this.fightResult = fightResult;
+        this.fightMessage = fightMessage;
+    }
 }
