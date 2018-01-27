@@ -31,6 +31,7 @@ export class SudokuGameRequestsService {
                 userId = user.id;
             }
             return this.http.get<SudokuGenResponse>('http://localhost:8080/sudoku/getSaved?userId=' + userId).map((data) => {
+                console.log("GET SAVED");
                 console.log(data);
                 return data;
             });
