@@ -11,7 +11,7 @@ import java.util.List;
 public class SudokuRepositoryController {
 
     @Autowired
-    private SudokuCellEntityDao sudokuCellEntityDao;
+    private SudokuCellEntityRepository sudokuCellEntityDao;
 
     public List<SudokuCellEntity> readSudokuCellEntities(Long userId){
         List<SudokuCellEntity> cells;

@@ -5,6 +5,9 @@ public class SudokuBoardWebDTO {
     private CellWebDTO[][] board;
     private Long userId = (long)-1;
 
+    public SudokuBoardWebDTO() {
+    }
+
     public SudokuBoardWebDTO(CellWebDTO[][] board, Long userId) {
         this.board = board;
         this.userId = userId;

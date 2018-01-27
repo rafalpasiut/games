@@ -43,7 +43,7 @@ public class SudokuMapper {
             j = 0;
             for (int cell : row) {
                 boolean isDraft = (board[i][j] != 0);
-                webBoard[i][j] = new CellWebDTO(cell, solutionArray[i][j], isDraft, i, j);
+                webBoard[i][j] = new CellWebDTO(cell, solutionArray[i][j], i, j, isDraft);
                 j++;
             }
             i++;
@@ -96,7 +96,7 @@ public class SudokuMapper {
         cellWebDTO.setSolution(cell.getSolution());
         cellWebDTO.setX(cell.getRowNumber());
         cellWebDTO.setY(cell.getColumnNumber());
-        cellWebDTO.setDraftNumber(cell.getDraftNumber());
+        cellWebDTO.setDraftNumber(cell.isDraftNumber());
 
         return cellWebDTO;
     }

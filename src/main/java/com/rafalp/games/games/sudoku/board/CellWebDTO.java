@@ -16,7 +16,7 @@ public class CellWebDTO {
     public CellWebDTO() {
     }
 
-    public CellWebDTO(int value, int solution, boolean draftNumber, int x, int y) {
+    public CellWebDTO(int value, int solution, int x, int y, boolean draftNumber) {
         this.value = value;
         this.solution = solution;
         this.draftNumber = draftNumber;

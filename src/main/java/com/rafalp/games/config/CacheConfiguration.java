@@ -46,6 +46,7 @@ public class CacheConfiguration {
             cm.createCache(com.rafalp.games.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.rafalp.games.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(com.rafalp.games.domain.SocialUserConnection.class.getName(), jcacheConfiguration);
+            cm.createCache(com.rafalp.games.domain.SudokuCellEntity.class.getName(),jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,11 +1,19 @@
 package com.rafalp.games.repository;
 
 import com.rafalp.games.domain.SudokuCellEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
 
-public interface SudokuCellEntityDao extends CrudRepository<SudokuCellEntity, Integer> {
+
+/**
+ * Spring Data JPA repository for the SudokuCellEntity entity.
+ */
+@SuppressWarnings("unused")
+@Repository
+public interface SudokuCellEntityRepository extends JpaRepository<SudokuCellEntity, Long> {
 
     @Override
     SudokuCellEntity save(SudokuCellEntity entity);

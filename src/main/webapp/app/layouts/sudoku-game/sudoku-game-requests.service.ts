@@ -8,7 +8,7 @@ import {Principal} from '../../shared/auth/principal.service';
 @Injectable()
 export class SudokuGameRequestsService {
 
-    private resourceUrl = SERVER_API_URL + 'sudoku'; // pokazuje na 9000 zamiast na 8080
+    private resourceUrl = SERVER_API_URL;
     private user: any;
 
     constructor(private http: HttpClient,
@@ -17,7 +17,8 @@ export class SudokuGameRequestsService {
     }
 
     generateNew(hardLevel: number): Observable<SudokuGenResponse> {
-        return this.http.get<SudokuGenResponse>('http://localhost:8080/sudoku/new?level=' + hardLevel).map((data) => {
+        console.log(SERVER_API_URL + '/sudokuNew?level=' + hardLevel);
+        return this.http.get<SudokuGenResponse>(SERVER_API_URL + '/api/sudokuNew?level=' + hardLevel).map((data) => {
             return <SudokuGenResponse>data;
         });
     }
@@ -30,7 +31,7 @@ export class SudokuGameRequestsService {
             } else {
                 userId = user.id;
             }
-            return this.http.get<SudokuGenResponse>('http://localhost:8080/sudoku/getSaved?userId=' + userId).map((data) => {
+            return this.http.get<SudokuGenResponse>(SERVER_API_URL + '/api/sudokuGetSaved?userId=' + userId).map((data) => {
                 console.log("GET SAVED");
                 console.log(data);
                 return data;
@@ -39,11 +40,12 @@ export class SudokuGameRequestsService {
     }
 
     saveChangedSudoku(sudoku: SudokuGenResponse): void {
+        console.log(sudoku);
         this.getUserId().then((user) => {
             console.log(user);
             if (user !== null) {
                 sudoku.userId = user.id;
-                this.http.put<SudokuGenResponse>('http://localhost:8080/sudoku/saveSudoku', sudoku).subscribe((res) => {
+                this.http.put<SudokuGenResponse>(SERVER_API_URL + '/api/sudokuSaveSudoku', sudoku).subscribe((res) => {
                 });
             }
         });
