@@ -29,6 +29,6 @@
     "testFrameworks": [],
     "jhiPrefix": "jhi",
     "enableTranslation": false,
-    "herokuAppName": null
+    "herokuAppName": "logic-games"
   }
 }
