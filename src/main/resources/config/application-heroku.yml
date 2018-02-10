@@ -12,7 +12,7 @@
 
 eureka:
     instance:
-        hostname: logic-games.herokuapp.com
+        hostname: logi-games.herokuapp.com
         non-secure-port: 80
         prefer-ip-address: false
     client:
